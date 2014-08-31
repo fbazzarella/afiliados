@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Devise::SessionsController do
+RSpec.describe Devise::SessionsController, type: :controller do
   render_views
   
   login!

@@ -10,6 +10,8 @@ namespace :emails do
     (1..4).each do |i|
       file_name = "emails_#{i}.csv"
 
+      print "\n#{file_name}..."
+
       CSV.foreach(Rails.root.join('tmp', 'imports', file_name)) do |row|
         count[:partial] += 1
 
@@ -18,7 +20,6 @@ namespace :emails do
         if email.valid?
           email.save
 
-          print '.'.green
           count[:saved] += 1
         else
           ImportError.create({
@@ -28,19 +29,22 @@ namespace :emails do
             error_messages: email.errors.messages.inspect
           })
 
-          print '.'.red
           count[:invalid] += 1
         end
       end
 
+      print " done!"
       count[:partial] = 0
     end
 
-    puts "\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
+    puts "\n\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
   end
 
   desc 'Import emails from a CSV file to the database'
   task import: :environment do
+    # Use the command bellow to call this task:
+    # nohup bundle exec rake emails:import 2>&1 >> log/emails_import.log &
+
     import!
   end
 

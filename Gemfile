@@ -25,6 +25,7 @@ gem 'therubyracer'
 # Dev Tools
 gem 'mypg'
 gem 'shuttle'
+gem 'colored'
 gem 'pry-rails'
 gem 'awesome_print'
 gem 'exception_notification'

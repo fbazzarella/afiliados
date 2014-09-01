@@ -8,4 +8,6 @@ RSpec.describe Shot, type: :model do
 
   it { should validate_presence_of(:email_id) }
   it { should validate_presence_of(:campaign_id) }
+  
+  it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
 end

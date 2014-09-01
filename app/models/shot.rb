@@ -5,4 +5,5 @@ class Shot < ActiveRecord::Base
   delegate :verified_at, to: :email
 
   validates :email_id, :campaign_id, presence: true
+  validates :email_id, uniqueness: {scope: :campaign_id}
 end

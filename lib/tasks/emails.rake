@@ -3,35 +3,45 @@ namespace :emails do
     require 'csv'
     require 'colored'
 
-    puts "Importing emails to the database...".bold
+    puts "Importing emails to the database...\n".bold
 
     count = {saved: 0, invalid: 0, lines: 0}
 
-    CSV.foreach(Rails.root.join('tmp', 'imports', 'emails.csv')) do |row|
+    (1..8473).each do |i|
+      file_name = "emails_#{i.to_s.rjust(5, '0')}"
+      print "Importing #{file_name}... "
+
       begin
-        count[:lines] += 1
+        CSV.foreach(Rails.root.join('tmp', 'imports', file_name)) do |row|
+          count[:lines] += 1
 
-        email = Email.new(address: row[0].try(:strip))
+          email = Email.new(address: row[0].try(:strip))
 
-        if email.valid?
-          email.save
+          if email.valid?
+            email.save
 
-          count[:saved] += 1
-        else
-          ImportError.create({
-            line_number: count[:lines],
-            line_string: row[0],
-            error_messages: email.errors.messages.inspect
-          })
+            count[:saved] += 1
+          else
+            ImportError.create({
+              file_name: file_name,
+              line_number: count[:lines],
+              line_string: row[0],
+              error_messages: email.errors.messages.inspect
+            })
 
-          count[:invalid] += 1
+            count[:invalid] += 1
+          end
         end
+
+        puts "Done!"
       rescue Exception => msg
-        puts "Line #{count[:lines]}: #{msg}"
+        puts "Exception: #{msg}"
       end
+
+      count[:lines] = 0
     end
 
-    puts "\n\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
+    puts "\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
   end
 
   desc 'Import emails from a CSV file to the database'

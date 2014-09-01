@@ -5,15 +5,11 @@ namespace :emails do
 
     puts "Importing emails to the database...".bold
 
-    count = {saved: 0, invalid: 0, partial: 0}
+    count = {saved: 0, invalid: 0, lines: 0}
 
-    (1..4).each do |i|
-      file_name = "emails_#{i}.csv"
-
-      print "\n#{file_name}..."
-
-      CSV.foreach(Rails.root.join('tmp', 'imports', file_name)) do |row|
-        count[:partial] += 1
+    CSV.foreach(Rails.root.join('tmp', 'imports', 'emails.csv')) do |row|
+      begin
+        count[:lines] += 1
 
         email = Email.new(address: row[0].try(:strip))
 
@@ -23,18 +19,16 @@ namespace :emails do
           count[:saved] += 1
         else
           ImportError.create({
-            file_name:      file_name,
-            line_number:    count[:partial],
-            line_string:    row[0],
+            line_number: count[:lines],
+            line_string: row[0],
             error_messages: email.errors.messages.inspect
           })
 
           count[:invalid] += 1
         end
+      rescue Exception => msg
+        puts "Line #{count[:lines]}: #{msg}"
       end
-
-      print " done!"
-      count[:partial] = 0
     end
 
     puts "\n\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
@@ -52,8 +46,9 @@ namespace :emails do
   task clean: :environment do
     print "Deleting emails from the database...".bold
 
-    ActiveRecord::Base.connection.execute('delete from emails')
-    ActiveRecord::Base.connection.execute('delete from import_errors')
+    %w(emails import_errors).each do |table|
+      ActiveRecord::Base.connection.execute("truncate #{table}")
+    end
 
     puts " Done!".bold
   end

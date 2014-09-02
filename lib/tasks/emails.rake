@@ -7,7 +7,7 @@ namespace :emails do
 
     count = {saved: 0, invalid: 0, lines: 0}
 
-    (1..8473).each do |i|
+    (1..8472).each do |i|
       file_name = "emails_#{i.to_s.rjust(5, '0')}"
       print "Importing #{file_name}... "
 

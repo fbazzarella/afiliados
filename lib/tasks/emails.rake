@@ -52,7 +52,7 @@ namespace :emails do
   desc 'Import emails from a CSV file to the database'
   task :import, [:range, :threads] => :environment do |t, args|
     # Use the command bellow to call this task:
-    # nohup bundle exec rake emails:import 2>&1 >> log/emails_import.log &
+    # nohup bundle exec rake emails:import[x..x,x] 2>&1 >> log/emails_import.log.x &
 
     range, threads = *args
 

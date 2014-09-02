@@ -1,55 +1,72 @@
+require 'csv'
+require 'colored'
+
 namespace :emails do
-  def import!
-    require 'csv'
-    require 'colored'
+  def run_queue!(queue, threads = 1)
+    workers = (0...threads).map do
+      Thread.new do
+        config = ActiveRecord::Base.configurations[Rails.env]
+        ActiveRecord::Base.establish_connection(config)
 
-    puts "Importing emails to the database...\n".bold
+        sleep 3
 
-    count = {saved: 0, invalid: 0, lines: 0}
-
-    (1..8472).each do |i|
-      file_name = "emails_#{i.to_s.rjust(5, '0')}"
-      print "Importing #{file_name}... "
-
-      begin
-        CSV.foreach(Rails.root.join('tmp', 'imports', file_name)) do |row|
-          count[:lines] += 1
-
-          email = Email.new(address: row[0].try(:strip))
-
-          if email.valid?
-            email.save
-
-            count[:saved] += 1
-          else
-            ImportError.create({
-              file_name: file_name,
-              line_number: count[:lines],
-              line_string: row[0],
-              error_messages: email.errors.messages.inspect
-            })
-
-            count[:invalid] += 1
+        begin
+          while file_name = queue.pop(true)
+            import_file(file_name)
           end
+        rescue Exception
         end
-
-        puts "Done!"
-      rescue Exception => msg
-        puts "Exception: #{msg}"
       end
-
-      count[:lines] = 0
     end
+    
+    workers.map(&:join)
+  end
 
-    puts "\nDone! #{count[:saved]} saved and #{count[:invalid]} ignored.".bold
+  def import_file(file_name)
+    sleep 1
+    line = 0
+
+    begin
+      CSV.foreach(Rails.root.join('tmp', 'imports', file_name)) do |row|
+        line += 1
+
+        email = Email.new(address: row[0].try(:strip))
+
+        if email.valid?
+          email.save
+        else
+          ImportError.create({
+            file_name: file_name,
+            line_number: line,
+            line_string: row[0],
+            error_messages: email.errors.messages.inspect
+          })
+        end
+      end
+    rescue SystemCallError
+    rescue Exception => msg
+      puts "#{Time.zone.now.strftime("%FT%R")} Exception on #{file_name}: #{msg}"
+    end
   end
 
   desc 'Import emails from a CSV file to the database'
-  task import: :environment do
+  task :import, [:range, :threads] => :environment do |t, args|
     # Use the command bellow to call this task:
     # nohup bundle exec rake emails:import 2>&1 >> log/emails_import.log &
 
-    import!
+    range, threads = *args
+
+    puts "#{Time.zone.now.strftime("%FT%R")} Importing emails to the database...\n".bold
+  
+    ActiveRecord::Base.connection_pool.disconnect!
+
+    queue = Queue.new
+
+    eval(range).each { |i| queue.push("emails_#{i.to_s.rjust(5, '0')}") }
+
+    run_queue! queue, eval(threads)
+
+    puts "\n#{Time.zone.now.strftime("%FT%R")} Done!".bold
   end
 
   desc 'Delete all emails from the database'

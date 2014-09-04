@@ -184,7 +184,6 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  colored
   devise
   exception_notification
   factory_girl_rails

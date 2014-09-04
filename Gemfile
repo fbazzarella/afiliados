@@ -6,6 +6,7 @@ gem 'pg'
 
 # Backend Features
 gem 'devise'
+gem 'sendgrid'
 gem 'kaminari'
 gem 'responders'
 

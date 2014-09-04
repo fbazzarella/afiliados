@@ -29,16 +29,17 @@ module NewApp
     config.assets.initialize_on_precompile = false
 
     # Authentication configuration for ActionMailer
-    # config.action_mailer.delivery_method = :smtp
+    config.action_mailer.delivery_method = :smtp
 
-    # config.action_mailer.smtp_settings = {
-    #   address:   'smtp.gmail.com',
-    #   port:      587,
-    #   user_name: ENV['SMTP_USERNAME'],
-    #   password:  ENV['SMTP_PASSWORD'],
-    #   authentication: 'plain',
-    #   enable_starttls_auto: true
-    # }
+    config.action_mailer.smtp_settings = {
+      address:   'smtp.sendgrid.net',
+      port:      587,
+      domain:    ENV['SMTP_DOMAIN'],
+      user_name: ENV['SMTP_USERNAME'],
+      password:  ENV['SMTP_PASSWORD'],
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
 
     # HTML generated for form fields with error
     config.action_view.field_error_proc = Proc.new do |html_tag|

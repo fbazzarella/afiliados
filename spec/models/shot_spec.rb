@@ -9,6 +9,14 @@ RSpec.describe Shot, type: :model do
   
   it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
 
+  describe '#unqueued' do
+    let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+    let!(:unqueued_shot) { create(:shot, queued_at: nil) }
+
+    it { expect(described_class.unqueued).to include(unqueued_shot) }
+    it { expect(described_class.unqueued).to_not include(queued_shot) }
+  end
+
   describe '#postback' do
     let!(:shot) { create(:shot) }
 

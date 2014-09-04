@@ -4,10 +4,18 @@ FactoryGirl.define do
     password 'secret'
   end
 
-  factory :import_error do
-    file_name 'file'
-    line_number 1
-    line_string 'string'
-    error_messages 'error'
+  factory :email do
+    sequence :address do |n|
+      "mail-#{n}@example.com"
+    end
+  end
+
+  factory :campaign do
+    name 'Campaign Name'
+  end
+
+  factory :shot do
+    email
+    campaign
   end
 end

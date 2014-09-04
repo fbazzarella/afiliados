@@ -7,7 +7,7 @@ class Shot < ActiveRecord::Base
 
   def self.postback(events)
     events.each do |event|
-      find(event['shot_id']).update_attribute("#{event['event']}_at".to_sym, Time.zone.now)
+      find(event['shot_id']).touch("#{event['event']}_at".to_sym)
     end
   end
 end

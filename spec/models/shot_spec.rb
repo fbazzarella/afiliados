@@ -8,4 +8,20 @@ RSpec.describe Shot, type: :model do
   it { should validate_presence_of(:campaign_id) }
   
   it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
+
+  describe '#postback' do
+    let!(:shot) { create(:shot) }
+
+    it do
+      %w(delivered bounce deferred dropped click open spamreport unsubscribe).each do |e|
+        events = [{'shot_id' => shot.id, 'event' => e}]
+        expect{ described_class.postback(events); shot.reload }.to change(shot, "#{e}_at".to_sym)
+      end
+    end
+
+    it do
+      events = [{'shot_id' => shot.id, 'event' => 'other_event'}]
+      expect{ described_class.postback(events) }.to raise_error(NoMethodError)
+    end
+  end
 end

@@ -3,5 +3,7 @@ NewApp::Application.routes.draw do
 
   devise_for :users
 
-  resources :campaigns, only: :index
+  resources :campaigns, only: :index do
+    post 'sendgrid-postback', on: :collection
+  end
 end

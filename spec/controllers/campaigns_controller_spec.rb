@@ -9,13 +9,24 @@ RSpec.describe CampaignsController, type: :controller do
 
       before { get :index }
 
-      it { should respond_with 200 }
+      it { is_expected.to respond_with 200 }
     end
 
     context 'when logged out' do
       before { get :index }
 
-      it { expect(response).to redirect_to(new_user_session_path) }
+      it { is_expected.to redirect_to(new_user_session_path) }
     end
+  end
+
+  describe 'POST #sendgrid_postback' do
+    before { post :sendgrid_postback }
+
+    it do
+      Campaign.should_receive(:postback).with([]).once
+      post :sendgrid_postback, '_json' => []
+    end
+
+    it { is_expected.to respond_with 200 }
   end
 end

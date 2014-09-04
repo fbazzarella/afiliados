@@ -12,4 +12,8 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
   config.color = true
+
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = :should
+  end
 end

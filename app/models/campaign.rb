@@ -3,4 +3,7 @@ class Campaign < ActiveRecord::Base
   has_many :emails, through: :shots
 
   validates :name, presence: true
+
+  def self.postback(events)
+  end
 end

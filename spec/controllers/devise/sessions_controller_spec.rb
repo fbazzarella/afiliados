@@ -7,5 +7,5 @@ RSpec.describe Devise::SessionsController, type: :controller do
 
   before { delete :destroy }
 
-  it { expect(response).to redirect_to(new_user_session_path) }
+  it { is_expected.to redirect_to(new_user_session_path) }
 end

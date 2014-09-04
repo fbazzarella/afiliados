@@ -20,13 +20,18 @@ RSpec.describe CampaignsController, type: :controller do
   end
 
   describe 'POST #sendgrid_postback' do
-    before { post :sendgrid_postback }
-
-    it do
-      Campaign.should_receive(:postback).with([]).once
+    def post_sendgrid_postback
       post :sendgrid_postback, '_json' => []
     end
 
-    it { is_expected.to respond_with 200 }
+    it do
+      Campaign.should_receive(:postback).with([]).once
+      post_sendgrid_postback
+    end
+
+    it do
+      post_sendgrid_postback
+      is_expected.to respond_with 200
+    end
   end
 end

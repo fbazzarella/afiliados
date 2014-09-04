@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904013148) do
+ActiveRecord::Schema.define(version: 20140904164401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20140904013148) do
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "bounced_at"
   end
 
   add_index "emails", ["address"], name: "index_emails_on_address", unique: true, using: :btree
@@ -36,10 +35,15 @@ ActiveRecord::Schema.define(version: 20140904013148) do
     t.integer  "campaign_id"
     t.datetime "queued_at"
     t.datetime "delivered_at"
-    t.datetime "opened_at"
-    t.datetime "unsubscribed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "bounce_at"
+    t.datetime "deferred_at"
+    t.datetime "dropped_at"
+    t.datetime "click_at"
+    t.datetime "open_at"
+    t.datetime "spamreport_at"
+    t.datetime "unsubscribe_at"
   end
 
   add_index "shots", ["campaign_id"], name: "index_shots_on_campaign_id", using: :btree

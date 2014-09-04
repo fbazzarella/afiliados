@@ -1,7 +1,7 @@
 NewApp::Application.routes.draw do
-  root to: 'users#index'
+  root to: 'campaigns#index'
 
   devise_for :users
 
-  resources :users, only: :index
+  resources :campaigns, only: :index
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe CampaignsController, type: :controller do
   render_views
 
   describe 'GET #index' do

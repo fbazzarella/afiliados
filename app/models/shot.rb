@@ -5,6 +5,7 @@ class Shot < ActiveRecord::Base
   validates :email_id, :campaign_id, presence: true
   validates :email_id, uniqueness: {scope: :campaign_id}
 
+  scope :queued,   -> { where.not(queued_at: nil) }
   scope :unqueued, -> { where(queued_at: nil) }
 
   def self.postback(events)

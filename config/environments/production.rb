@@ -67,7 +67,7 @@ NewApp::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Default URL options for ActionMailer
-  config.action_mailer.default_url_options = { host: 'yourhost.com' }
+  config.action_mailer.default_url_options = { host: 'afiliados.bazzarella.com' }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).

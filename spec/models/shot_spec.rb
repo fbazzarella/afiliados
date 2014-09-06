@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe Shot, type: :model do
   it { should belong_to(:email) }
   it { should belong_to(:campaign) }
+  it { should have_many(:shot_events).dependent(:restrict_with_error) }
 
   it { should validate_presence_of(:email_id) }
   it { should validate_presence_of(:campaign_id) }
-  
+
   it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
 
   describe '#queued' do

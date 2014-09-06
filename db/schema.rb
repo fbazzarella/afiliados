@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904164401) do
+ActiveRecord::Schema.define(version: 20140906190521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -29,6 +30,17 @@ ActiveRecord::Schema.define(version: 20140904164401) do
   end
 
   add_index "emails", ["address"], name: "index_emails_on_address", unique: true, using: :btree
+
+  create_table "shot_events", force: true do |t|
+    t.integer  "shot_id"
+    t.string   "service"
+    t.string   "event"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.hstore   "event_hash"
+  end
+
+  add_index "shot_events", ["shot_id"], name: "index_shot_events_on_shot_id", using: :btree
 
   create_table "shots", force: true do |t|
     t.integer  "email_id"

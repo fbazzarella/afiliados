@@ -152,8 +152,6 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    sendgrid (1.2.0)
-      json
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
     shuttle (2.0.1)
@@ -220,7 +218,6 @@ DEPENDENCIES
   responders
   rspec-rails
   sass-rails
-  sendgrid
   shoulda-matchers
   shuttle
   sidekiq

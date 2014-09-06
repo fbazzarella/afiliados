@@ -8,7 +8,6 @@ gem 'pg'
 gem 'devise'
 gem 'sinatra'
 gem 'sidekiq'
-gem 'sendgrid'
 gem 'kaminari'
 gem 'responders'
 

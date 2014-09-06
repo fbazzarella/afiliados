@@ -1,13 +1,20 @@
 class CampaignMailer < ActionMailer::Base
-  include SendGrid
-  
   default from: 'Felipe Bazzarella <fbazzarella@gmail.com>'
 
   def shot(shot)
     @shot = shot
 
-    sendgrid_unique_args({shot_id: @shot.id})
+    add_custom_header(@shot.id)
 
     mail(to: @shot.email.address, subject: 'Oopa! Dá uma olhada :D')
+  end
+
+  private
+
+  def add_custom_header(shot_id)
+    json  = "{'shot_id': #{shot_id}}"
+
+    headers['X-SMTPAPI']           = "{unique_args: #{json}}"
+    headers['X-Mailgun-Variables'] = json
   end
 end

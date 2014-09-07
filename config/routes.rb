@@ -12,6 +12,6 @@ NewApp::Application.routes.draw do
   resources :campaigns, only: :index
 
   resources :shots, only: [] do
-    post 'sendgrid-postback', on: :collection
+    post 'event-postback', on: :collection
   end
 end

@@ -1,8 +1,8 @@
 class ShotsController < ApplicationController
-  skip_before_action :verify_authenticity_token, :authenticate_user!, only: :sendgrid_postback
+  skip_before_action :verify_authenticity_token, :authenticate_user!, only: :event_postback
 
-  def sendgrid_postback
-    Shot.postback(params['_json'])
+  def event_postback
+    Shot.postback(params['_json'] || params['items'], params['service'])
     head :ok
   end
 end

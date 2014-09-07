@@ -18,4 +18,10 @@ FactoryGirl.define do
     email
     campaign
   end
+
+  factory :shot_event do
+    service    'service-name'
+    event      'delivered'
+    event_hash Hash.new('event' => 'delivered')
+  end
 end

@@ -10,35 +10,51 @@ RSpec.describe Shot, type: :model do
 
   it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
 
-  describe '#queued' do
-    let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
-    let!(:unqueued_shot) { create(:shot, queued_at: nil) }
+  describe 'scopes' do
+    describe '#queued' do
+      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
-    it { expect(described_class.queued).to_not include(unqueued_shot) }
-    it { expect(described_class.queued).to include(queued_shot) }
-  end
+      it { expect(described_class.queued).to_not include(unqueued_shot) }
+      it { expect(described_class.queued).to include(queued_shot) }
+    end
 
-  describe '#unqueued' do
-    let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
-    let!(:unqueued_shot) { create(:shot, queued_at: nil) }
+    describe '#unqueued' do
+      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
-    it { expect(described_class.unqueued).to include(unqueued_shot) }
-    it { expect(described_class.unqueued).to_not include(queued_shot) }
+      it { expect(described_class.unqueued).to include(unqueued_shot) }
+      it { expect(described_class.unqueued).to_not include(queued_shot) }
+    end
   end
 
   describe '#postback' do
     let!(:shot) { create(:shot) }
 
-    it do
-      %w(delivered bounce deferred dropped click open spamreport unsubscribe).each do |e|
-        events = [{'shot_id' => shot.id, 'event' => e}]
-        expect{ described_class.postback(events); shot.reload }.to change(shot, "#{e}_at".to_sym)
-      end
+    context 'when service is sendgrid' do
+      let!(:events) { [{'shot_id' => shot.id, 'event' => 'delivered'}] }
+
+      before { described_class.postback(events, 'sendgrid') }
+
+      it { expect(shot.shot_events.first.service).to be_eql('sendgrid') }
+      it { expect(shot.shot_events.first.event).to be_eql('delivered') }
+      it { expect(shot.shot_events.first.event_hash['event']).to be_eql('delivered') }
+      it { expect{ described_class.postback(events, 'service') }.to change(shot.shot_events, :count).by(1) }
     end
 
-    it do
-      events = [{'shot_id' => shot.id, 'event' => 'other_event'}]
-      expect{ described_class.postback(events) }.to raise_error(NoMethodError)
+    context 'when service is mailgun' do
+      let!(:events) { [{'X-Mailgun-Variables' => {'shot_id' => shot.id}, 'event' => 'delivered'}] }
+
+      before { described_class.postback(events, 'mailgun') }
+
+      it { expect(shot.shot_events.first.service).to be_eql('mailgun') }
+      it { expect(shot.shot_events.first.event).to be_eql('delivered') }
+      it { expect(shot.shot_events.first.event_hash['event']).to be_eql('delivered') }
+      it { expect{ described_class.postback(events, 'service') }.to change(shot.shot_events, :count).by(1) }
+    end
+
+    context 'when invalid shot id' do
+      it { expect{ described_class.postback([{'shot_id' => 0}], 'service') }.to_not change(ShotEvent, :count) }
     end
   end
 end

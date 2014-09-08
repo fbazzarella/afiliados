@@ -29,32 +29,43 @@ RSpec.describe Shot, type: :model do
   end
 
   describe '#postback' do
-    let!(:shot) { create(:shot) }
+    context 'when valid service' do
+      context 'when valid shot id' do
+        let!(:shot) { create(:shot) }
+        let!(:params) { {'service' => 'mailgun', 'shot_id' => shot.id, 'event' => 'delivered'} }
 
-    context 'when service is sendgrid' do
-      let!(:events) { [{'shot_id' => shot.id, 'event' => 'delivered'}] }
+        before { described_class.postback(params) }
 
-      before { described_class.postback(events, 'sendgrid') }
+        it { expect(shot.shot_events.first.service).to be_eql('mailgun') }
+        it { expect(shot.shot_events.first.event).to be_eql('delivered') }
+        it { expect(shot.shot_events.first.event_hash['event']).to be_eql('delivered') }
+      end
 
-      it { expect(shot.shot_events.first.service).to be_eql('sendgrid') }
-      it { expect(shot.shot_events.first.event).to be_eql('delivered') }
-      it { expect(shot.shot_events.first.event_hash['event']).to be_eql('delivered') }
-      it { expect{ described_class.postback(events, 'service') }.to change(shot.shot_events, :count).by(1) }
+      context 'when invalid shot id' do
+        let!(:params) { {'service' => 'mailgun', 'shot_id' => 0, 'event' => 'delivered'} }
+
+        it { expect{ described_class.postback(params) }.to raise_error(ActiveRecord::RecordNotFound) }
+      end
     end
 
-    context 'when service is mailgun' do
-      let!(:events) { [{'X-Mailgun-Variables' => {'shot_id' => shot.id}, 'event' => 'delivered'}] }
+    context 'when invalid service' do
+      it { expect(described_class.postback({'service' => 'other'})).to be_eql(false) }
+    end
+  end
 
-      before { described_class.postback(events, 'mailgun') }
+  describe 'private methods' do
+    let!(:expected_params) { [{'event' => 'delivered'}] }
 
-      it { expect(shot.shot_events.first.service).to be_eql('mailgun') }
-      it { expect(shot.shot_events.first.event).to be_eql('delivered') }
-      it { expect(shot.shot_events.first.event_hash['event']).to be_eql('delivered') }
-      it { expect{ described_class.postback(events, 'service') }.to change(shot.shot_events, :count).by(1) }
+    describe '#sendgrid_params' do
+      let!(:params) { {'_json' => [{'event' => 'delivered'}]} }
+
+      it { expect(described_class.send(:sendgrid_params, params)).to be_eql(expected_params) }
     end
 
-    context 'when invalid shot id' do
-      it { expect{ described_class.postback([{'shot_id' => 0}], 'service') }.to_not change(ShotEvent, :count) }
+    describe '#mailgun_params' do
+      let!(:params) { {'event' => 'delivered'} }
+
+      it { expect(described_class.send(:mailgun_params, params)).to be_eql(expected_params) }
     end
   end
 end

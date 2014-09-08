@@ -9,13 +9,24 @@ class Shot < ActiveRecord::Base
   scope :queued,   -> { where.not(queued_at: nil) }
   scope :unqueued, -> { where(queued_at: nil) }
 
-  def self.postback(events, service)
-    events.each do |event|
-      shot_id = event['shot_id'] || event['X-Mailgun-Variables']['shot_id']
+  class << self
+    def postback(params)
+      return false unless %w(sendgrid mailgun).include?(service = params.delete('service'))
 
-      find(shot_id) do |shot|
-        shot.shot_events.create(service: service, event: event['event'], event_hash: event)
+      send("#{service}_params".to_sym, params).each do |event|
+        shot_event_attributes = {service: service, event: event['event'], event_hash: event}
+        find(event['shot_id']).shot_events.create(shot_event_attributes)
       end
+    end
+
+    private
+
+    def sendgrid_params(params)
+      params['_json']
+    end
+
+    def mailgun_params(params)
+      [params]
     end
   end
 end

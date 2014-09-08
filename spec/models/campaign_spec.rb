@@ -9,10 +9,11 @@ RSpec.describe Campaign, type: :model do
   describe '.prepare_chase!' do
     let!(:shot) { create(:shot) }
     let!(:campaign) { create(:campaign, shots: [shot]) }
+    let!(:queue) { Sidekiq::Extensions::DelayedModel.jobs }
 
-    it { expect{ campaign.prepare_chase!(2) }.to change(Sidekiq::Extensions::DelayedModel.jobs, :size).by(1) }
-    it { expect{ campaign.prepare_chase!(0) }.to change(Sidekiq::Extensions::DelayedModel.jobs, :size).by(1) }
-    it { expect{ campaign.prepare_chase!(1) }.to_not change(Sidekiq::Extensions::DelayedModel.jobs, :size) }
+    it { expect{ campaign.prepare_chase!(2) }.to change(queue, :size).by(1) }
+    it { expect{ campaign.prepare_chase!(0) }.to change(queue, :size).by(1) }
+    it { expect{ campaign.prepare_chase!(1) }.to_not change(queue, :size) }
     it { expect{ campaign.prepare_chase! }.to raise_error(ArgumentError) }
   end
 

@@ -6,7 +6,7 @@ NewApp::Application.routes.draw do
   devise_for :users
 
   authenticate :user do
-    mount Sidekiq::Web, at: '/shots/monitoring'
+    mount Sidekiq::Web, at: '/sidekiq'
   end
 
   resources :campaigns, only: :index

@@ -1,6 +1,7 @@
 common: &common
   adapter:  postgresql
   encoding: utf8
+  pool:     30
 
 local: &local
   username: postgres

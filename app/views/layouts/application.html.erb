@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nova App</title>
+    <title>Afiliados</title>
     <%= stylesheet_link_tag "application", media: "all" %>
     <%= csrf_meta_tags %>
 
@@ -25,12 +25,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <%= link_to 'Nova App', root_path, class: 'navbar-brand' %>
+          <%= link_to 'Afiliados', root_path, class: 'navbar-brand' %>
         </div>
         <div class="navbar-collapse collapse">
           <% if current_user.present? %>
             <ul class="nav navbar-nav">
               <%= menu_link_to 'Campanhas', campaigns_path %>
+              <li><%= link_to 'Sidekiq', sidekiq_web_path %></li>
             </ul>
           <% end %>
           <ul class="nav navbar-nav navbar-right">

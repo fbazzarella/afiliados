@@ -3,6 +3,7 @@
 # ENV['DEVISE_SECRET_KEY'] = 'AAAABBBBCCCCDDDD'
 # ENV['APP_SECRET_TOKEN']  = 'AAAABBBBCCCCDDDD'
 
+# ENV['SMTP_ADDRESS']  = 'smtp.domain.net'
 # ENV['SMTP_DOMAIN']   = 'email.com'
 # ENV['SMTP_USERNAME'] = 'your@email.com'
 # ENV['SMTP_PASSWORD'] = 'secret'

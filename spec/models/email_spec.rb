@@ -10,4 +10,9 @@ RSpec.describe Email, type: :model do
 
   it { should allow_value('email@example.com').for(:address) }
   it { should_not allow_value('invalid.email').for(:address) }
+
+  it { should allow_value('Ok').for(:verification_result) }
+  it { should allow_value('Bad').for(:verification_result) }
+  it { should allow_value(nil).for(:verification_result) }
+  it { should_not allow_value('Other').for(:verification_result) }
 end

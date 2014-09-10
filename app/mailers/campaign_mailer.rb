@@ -6,7 +6,7 @@ class CampaignMailer < ActionMailer::Base
 
     add_custom_headers(@shot.id)
 
-    mail(to: @shot.email.address, subject: 'Oopa! Dá uma olhada :D')
+    mail(to: @shot.email.address, subject: @shot.campaign.subject)
   end
 
   private

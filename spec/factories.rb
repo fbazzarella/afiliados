@@ -11,7 +11,8 @@ FactoryGirl.define do
   end
 
   factory :campaign do
-    name 'Campaign Name'
+    name    'Campaign Name'
+    subject 'Campaign Subject'
   end
 
   factory :shot do

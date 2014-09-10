@@ -16,13 +16,10 @@ class Campaign < ActiveRecord::Base
   private
 
   def increase_chase(nof)
-    email_count    = Email.count
-    first_email_id = Email.first.id
-    last_email_id  = Email.last.id
+    email_ids = Email.valids.pluck(:id)
 
-    while shots.count < nof and shots.count < email_count
-      email_id = rand(first_email_id..last_email_id)
-      shots.create(email: Email.where(id: email_id).first)
+    while shots.count < nof and shots.count < email_ids.size
+      shots.create(email_id: email_ids.sample)
     end
   end
 

@@ -25,8 +25,10 @@ RSpec.describe Campaign, type: :model do
 
   describe 'private methods' do
     describe '.increase_chase' do
+      let!(:valid_email) { create(:email, verification_result: 'Ok') }
+      let!(:not_valid_email) { create(:email, verification_result: 'Bad') }
+
       context 'when have shots to increase' do
-        let!(:email) { create(:email) }
         let!(:campaign) { create(:campaign) }
 
         it { expect{ campaign.send(:increase_chase, 1) }.to change(campaign.shots, :count).by(1) }
@@ -34,7 +36,7 @@ RSpec.describe Campaign, type: :model do
       end
 
       context 'when have not shots to increase' do
-        let!(:shot) { create(:shot) }
+        let!(:shot) { create(:shot, email: valid_email) }
         let!(:campaign) { create(:campaign, shots: [shot]) }
 
         it { expect{ campaign.send(:increase_chase, 1) }.to_not change(campaign.shots, :count) }

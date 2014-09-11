@@ -26,6 +26,22 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.unqueued).to include(unqueued_shot) }
       it { expect(described_class.unqueued).to_not include(queued_shot) }
     end
+
+    describe '#relayed' do
+      let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
+      let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
+
+      it { expect(described_class.relayed).to_not include(unrelayed_shot) }
+      it { expect(described_class.relayed).to include(relayed_shot) }
+    end
+
+    describe '#unrelayed' do
+      let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
+      let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
+
+      it { expect(described_class.unrelayed).to include(unrelayed_shot) }
+      it { expect(described_class.unrelayed).to_not include(relayed_shot) }
+    end
   end
 
   describe '#postback' do

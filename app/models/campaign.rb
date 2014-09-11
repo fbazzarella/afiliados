@@ -16,7 +16,7 @@ class Campaign < ActiveRecord::Base
   private
 
   def increase_chase(nof)
-    email_ids = Email.valids.pluck(:id)
+    email_ids = Email.valid.pluck(:id)
 
     while shots.count < nof and shots.count < email_ids.size
       shots.create(email_id: email_ids.sample)

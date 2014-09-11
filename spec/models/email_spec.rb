@@ -17,12 +17,12 @@ RSpec.describe Email, type: :model do
   it { should_not allow_value('Other').for(:verification_result) }
 
   describe 'scopes' do
-    describe '#valids' do
+    describe '#valid' do
       let!(:valid_email) { create(:email, verification_result: 'Ok') }
       let!(:not_valid_email) { create(:email) }
 
-      it { expect(described_class.valids).to include(valid_email) }
-      it { expect(described_class.valids).to_not include(not_valid_email) }
+      it { expect(described_class.valid).to include(valid_email) }
+      it { expect(described_class.valid).to_not include(not_valid_email) }
     end
   end
 end

@@ -1,7 +1,7 @@
 class CampaignMailer < ActionMailer::Base
   default from: 'Felipe Bazzarella <felipe@bazzarella.com>'
 
-  def self.delivering_email(mail)
+  def self.delivered_email(mail)
     shot_id = mail.header['X-Shot-Id'].to_s.to_i
     Shot.find(shot_id).touch(:relayed_at)
   end

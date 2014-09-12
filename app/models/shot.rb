@@ -32,4 +32,9 @@ class Shot < ActiveRecord::Base
       [params]
     end
   end
+
+  def shot!
+    CampaignMailer.delay.shot(self)
+    touch(:queued_at)
+  end
 end

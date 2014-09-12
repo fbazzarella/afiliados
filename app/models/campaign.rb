@@ -30,9 +30,6 @@ class Campaign < ActiveRecord::Base
   end
 
   def chase
-    shots.unqueued.each do |shot|
-      CampaignMailer.delay.shot(shot)
-      shot.touch(:queued_at)
-    end
+    shots.unqueued.each(&:shot!)
   end
 end

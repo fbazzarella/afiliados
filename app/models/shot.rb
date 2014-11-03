@@ -6,11 +6,16 @@ class Shot < ActiveRecord::Base
   validates :email_id, :campaign_id, presence: true
   validates :email_id, uniqueness: {scope: :campaign_id}
 
+  # default_scope -> { includes(:email, :campaign) }
+
   scope :queued,   -> { where.not(queued_at: nil) }
   scope :unqueued, -> { where(queued_at: nil) }
 
   scope :relayed,   -> { where.not(relayed_at: nil) }
   scope :unrelayed, -> { where(relayed_at: nil) }
+
+  # scope :delivered,   -> { joins(:shot_events).where(shot_events: {event: 'delivered'}).distinct }
+  # scope :undelivered, -> { joins(:shot_events).where.not(shot_events: {event: 'delivered'}).distinct } # Não funciona! Mais jobs falharam em produção. Comparar tudo! # Parece que o distinct resolve o problema :D
 
   class << self
     def postback(params)

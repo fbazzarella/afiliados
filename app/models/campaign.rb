@@ -9,6 +9,12 @@ class Campaign < ActiveRecord::Base
     delay.decrease_chase(nof) if nof < shots.count
   end
 
+  # def recover_chase!
+  #   unless Sidekiq::Queue.new('default').any?
+  #     delay.recover_chase
+  #   end
+  # end
+
   def chase!
     delay.chase
   end
@@ -28,6 +34,10 @@ class Campaign < ActiveRecord::Base
       shots.unqueued.last.delete
     end
   end
+
+  # def recover_chase
+  #   shots.queued.unrelayed.update_all(queued_at: nil)
+  # end
 
   def chase
     shots.unqueued.each(&:shot!)

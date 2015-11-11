@@ -1,47 +1,45 @@
-source 'https://rubygems.org'
-source 'https://rails-assets.org'
+ruby '2.2.3'
 
-gem 'rails', '4.1.5'
-gem 'pg'
+source 'https://rubygems.org' do
+  gem 'rails', '4.2.4'
+  gem 'pg'
 
-# Backend Features
-gem 'devise'
-gem 'sinatra'
-gem 'sidekiq'
-gem 'kaminari'
-gem 'responders'
+  gem 'devise'
+  gem 'sinatra'
+  gem 'sidekiq'
+  gem 'kaminari'
+  gem 'responders'
 
-# Frontend Features
-gem 'rails-assets-jquery'
-gem 'rails-assets-jquery-ujs'
-gem 'twitter-bootstrap-rails',
-  github: 'seyhunak/twitter-bootstrap-rails',
-  branch: 'bootstrap3'
+  gem 'less-rails'
+  gem 'sass-rails'
+  gem 'uglifier'
+  gem 'therubyracer'
 
-# Assets Features
-gem 'less-rails'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'therubyracer'
+  gem 'mypg'
+  gem 'shuttle'
+  gem 'pry-rails'
+  gem 'awesome_print'
+  gem 'exception_notification'
 
-# Dev Tools
-gem 'mypg'
-gem 'shuttle'
-gem 'pry-rails'
-gem 'awesome_print'
-gem 'exception_notification'
+  group :development do
+    gem 'thin'
+    gem 'quiet_assets'
+  end
 
-group :development do
-  gem 'thin'
-  gem 'quiet_assets'
+  group :development, :test do
+    gem 'rspec-rails'
+  end
+
+  group :test do
+    gem 'fuubar'
+    gem 'shoulda-matchers', '~> 2.8'
+    gem 'factory_girl_rails'
+  end
 end
 
-group :development, :test do
-  gem 'rspec-rails'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-jquery'
+  gem 'rails-assets-jquery-ujs'
 end
 
-group :test do
-  gem 'fuubar'
-  gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
-end
+gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'

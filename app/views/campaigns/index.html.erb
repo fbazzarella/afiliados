@@ -1,1 +1,53 @@
-Campaigns Index
+<h1>Campanhas</h1>
+<p>Aqui você pode definir o remetente, selecionar a lista de destinatários e colar o HTML da tela.</p>
+
+<div class="row">
+  <div class="col-xs-12 col-md-9 col-lg-8">
+    <%= form_for :campaign do |f| %>
+      <%#= def resource; @campaign; end; devise_error_messages! %>
+
+      <fieldset>
+        <legend>Cabeçalho</legend>
+
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <%= f.label 'Remetente' %>
+              <%= f.text_field :rooms, class: 'form-control integer' %>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <%= f.label 'Lista' %>
+              <%= f.text_field :rooms, class: 'form-control integer' %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Corpo</legend>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <%= f.label 'HTML' %>
+              <%= f.text_area :description, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <fieldset>
+            <legend>Finalizar</legend>
+
+            <%= f.submit 'Disparar Campanha', class: 'btn btn-lg btn-primary btn-block' %>
+          </fieldset>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

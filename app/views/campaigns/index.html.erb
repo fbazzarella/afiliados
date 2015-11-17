@@ -1,53 +1,113 @@
 <h1>Campanhas</h1>
-<p>Aqui você pode definir o remetente, selecionar a lista de destinatários e colar o HTML da tela.</p>
+<p>Aqui você pode definir o remetente, o assunto, colar o HTML da tela, selecionar a lista de destinatários e acompanhar o progresso dos envios.</p>
 
 <div class="row">
-  <div class="col-xs-12 col-md-9 col-lg-8">
-    <%= form_for :campaign do |f| %>
-      <%#= def resource; @campaign; end; devise_error_messages! %>
+  <%= form_for :campaign do |f| %>
+    <%#= def resource; @campaign; end; devise_error_messages! %>
 
+    <div class="col-xs-12 col-md-9 col-lg-8">
       <fieldset>
-        <legend>Cabeçalho</legend>
+        <legend>Detalhes</legend>
 
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <div class="form-group">
-              <%= f.label 'Remetente' %>
-              <%= f.text_field :rooms, class: 'form-control integer' %>
+              <label for="campaign_from">Remetente</label>
+              <%= f.text_field :from, class: 'form-control' %>
             </div>
           </div>
 
           <div class="col-xs-12 col-md-6">
             <div class="form-group">
-              <%= f.label 'Lista' %>
-              <%= f.text_field :rooms, class: 'form-control integer' %>
+              <label for="campaign_subject">Assunto</label>
+              <%= f.text_field :subject, class: 'form-control' %>
             </div>
           </div>
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Corpo</legend>
 
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
-              <%= f.label 'HTML' %>
-              <%= f.text_area :description, class: 'form-control' %>
+              <label for="campaign_html">HTML</label>
+              <%= f.text_area :html, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <%= f.submit 'Salvar Alterações', class: 'btn btn-primary pull-right' %>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="col-xs-12 col-md-3 col-lg-4">
+      <fieldset>
+        <legend>Lista</legend>
+
+        <p class="small">
+          Ao selecionar um arquivo com uma lista de emails, o sistema irá importá-lo e disparar a Campanha automaticamente em segundo plano. Porém, antes de selecionar uma lista, você deve criar a Campanha ao lado.
+        </p>
+
+        <p class="small">
+          O sistema está preparado para importar arquivos <i>.txt</i> e <i>.csv</i> contendo <i>1 email</i> por linha.
+        </p>
+
+        <hr />
+
+        <h5>Enviar Lista</h5>
+
+        <div class="row list-upload">
+          <div class="col-xs-4">
+            <div class="btn btn-xs btn-block btn-default fileinput-button disabled">
+              <span>
+                Aguardando
+              </span>
+
+              <input type="file" name="list" data-url="/campaigns/list-upload" accept=".txt,.csv">
+            </div>
+          </div>
+
+          <div class="col-xs-8 small-gutter">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success"></div>
+            </div>
+          </div>
+        </div>
+
+        <h5>Importar Lista</h5>
+
+        <div class="row">
+          <div class="col-xs-4">
+            <span class="btn btn-xs btn-block btn-default disabled">
+              Aguardando
+            </span>
+          </div>
+
+          <div class="col-xs-8 small-gutter">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success"></div>
+            </div>
+          </div>
+        </div>
+
+        <h5>Disparar Campanha</h5>
+
+        <div class="row">
+          <div class="col-xs-4">
+            <span class="btn btn-xs btn-block btn-default disabled">
+              Aguardando
+            </span>
+          </div>
+
+          <div class="col-xs-8 small-gutter">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success"></div>
             </div>
           </div>
         </div>
       </fieldset>
-
-      <div class="row">
-        <div class="col-xs-12">
-          <fieldset>
-            <legend>Finalizar</legend>
-
-            <%= f.submit 'Disparar Campanha', class: 'btn btn-lg btn-primary btn-block' %>
-          </fieldset>
-        </div>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

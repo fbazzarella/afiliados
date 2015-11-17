@@ -32,7 +32,7 @@ source 'https://rubygems.org' do
 
   group :test do
     gem 'fuubar'
-    gem 'shoulda-matchers', '~> 2.8'
+    gem 'shoulda-matchers'
     gem 'factory_girl_rails'
   end
 end

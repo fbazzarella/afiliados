@@ -13,9 +13,16 @@
 //= require jquery
 //= require jquery-ujs
 //= require twitter/bootstrap
+//= require blueimp-file-upload/vendor/jquery.ui.widget
+//= require blueimp-file-upload/jquery.iframe-transport
+//= require blueimp-file-upload/jquery.fileupload
+//= require blueimp-file-upload/jquery.fileupload-process
+//= require blueimp-file-upload/jquery.fileupload-validate
 //= require_tree .
 
 $(function () {
-  $('a[rel~=popover], .has-popover').popover();
-  $('a[rel~=tooltip], .has-tooltip').tooltip();
+  if (!!$('.campaigns_index')[0]) initListUpload();
+
+  // $('a[rel~=popover], .has-popover').popover();
+  // $('a[rel~=tooltip], .has-tooltip').tooltip();
 });

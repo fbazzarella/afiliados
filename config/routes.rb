@@ -9,7 +9,9 @@ NewApp::Application.routes.draw do
     mount Sidekiq::Web, at: '/sidekiq'
   end
 
-  resources :campaigns, only: :index
+  resources :campaigns, only: :index do
+    post 'list-upload', as: :list_upload, on: :collection
+  end
 
   resources :shots, only: [] do
     post 'event-postback', on: :collection

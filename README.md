@@ -1,4 +1,4 @@
-# New App
+# Afiliados
 
 Este guia destina-se apenas à instalação e execução do sistema em modo desenvolvimento.
 

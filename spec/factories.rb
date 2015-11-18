@@ -1,18 +1,13 @@
 FactoryGirl.define do
-  factory :user do
-    username 'johndoe'
-    password 'secret'
+  factory :campaign do
+    name    'Campaign Name'
+    subject 'Campaign Subject'
   end
 
   factory :email do
     sequence :address do |n|
       "mail-#{n}@example.com"
     end
-  end
-
-  factory :campaign do
-    name    'Campaign Name'
-    subject 'Campaign Subject'
   end
 
   factory :shot do
@@ -24,5 +19,10 @@ FactoryGirl.define do
     service    'service-name'
     event      'delivered'
     event_hash Hash.new('event' => 'delivered')
+  end
+
+  factory :user do
+    username 'johndoe'
+    password 'secret'
   end
 end

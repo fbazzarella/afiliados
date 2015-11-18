@@ -11,7 +11,7 @@ RSpec.describe Shot, type: :model do
   it { should validate_uniqueness_of(:email_id).scoped_to(:campaign_id) }
 
   describe 'scopes' do
-    describe '#queued' do
+    describe '.queued' do
       let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
@@ -19,7 +19,7 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.queued).to include(queued_shot) }
     end
 
-    describe '#unqueued' do
+    describe '.unqueued' do
       let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
@@ -27,7 +27,7 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.unqueued).to_not include(queued_shot) }
     end
 
-    describe '#relayed' do
+    describe '.relayed' do
       let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
       let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
 
@@ -35,7 +35,7 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.relayed).to include(relayed_shot) }
     end
 
-    describe '#unrelayed' do
+    describe '.unrelayed' do
       let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
       let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
 
@@ -44,7 +44,7 @@ RSpec.describe Shot, type: :model do
     end
   end
 
-  describe '#postback' do
+  describe '.postback' do
     context 'when valid service' do
       context 'when valid shot id' do
         let!(:shot) { create(:shot) }
@@ -72,19 +72,19 @@ RSpec.describe Shot, type: :model do
   describe 'private methods' do
     let!(:expected_params) { [{'event' => 'delivered'}] }
 
-    describe '#sendgrid_params' do
+    describe '.sendgrid_params' do
       let!(:params) { {'_json' => [{'event' => 'delivered'}]} }
 
       it { expect(described_class.send(:sendgrid_params, params)).to be_eql(expected_params) }
     end
 
-    describe '#mailgun_params' do
+    describe '.mailgun_params' do
       let!(:params) { {'event' => 'delivered'} }
 
       it { expect(described_class.send(:mailgun_params, params)).to be_eql(expected_params) }
     end
 
-    describe '.shot!' do
+    describe '#shot!' do
       let!(:shot) { create(:shot) }
 
       it { expect{ shot.send(:shot!) }.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CampaignMailer, type: :mailer do
-  describe '#shot' do
+  describe '.shot' do
     let!(:shot) { create(:shot) }
 
     subject { CampaignMailer.shot(shot) }

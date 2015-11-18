@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CampaignsController, type: :controller do
   render_views
 
-  describe 'GET #index' do
+  describe 'GET index' do
     context 'when logged in' do
       login!
 
@@ -19,7 +19,7 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
-  describe 'POST #list_upload' do
+  describe 'POST list_upload' do
     context 'when logged in' do
       login!
 

@@ -7,7 +7,7 @@ RSpec.describe Campaign, type: :model do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:subject) }
 
-  describe '.prepare_chase!' do
+  describe '#prepare_chase!' do
     let!(:shot) { create(:shot) }
     let!(:campaign) { create(:campaign, shots: [shot]) }
     let!(:queue) { Sidekiq::Extensions::DelayedModel.jobs }
@@ -18,14 +18,14 @@ RSpec.describe Campaign, type: :model do
     it { expect{ campaign.prepare_chase! }.to raise_error(ArgumentError) }
   end
 
-  describe '.chase!' do
+  describe '#chase!' do
     let!(:campaign) { create(:campaign) }
 
     it { expect{ campaign.chase! }.to change(Sidekiq::Extensions::DelayedModel.jobs, :size).by(1) }
   end
 
   describe 'private methods' do
-    describe '.increase_chase' do
+    describe '#increase_chase' do
       let!(:valid_email) { create(:email, verification_result: 'Ok') }
       let!(:not_valid_email) { create(:email, verification_result: 'Bad') }
 
@@ -44,7 +44,7 @@ RSpec.describe Campaign, type: :model do
       end
     end
 
-    describe '.decrease_chase' do
+    describe '#decrease_chase' do
       let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
       let!(:campaign) { create(:campaign, shots: [queued_shot, unqueued_shot]) }
@@ -59,7 +59,7 @@ RSpec.describe Campaign, type: :model do
       end
     end
 
-    describe '.chase' do
+    describe '#chase' do
       let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
       let!(:campaign) { create(:campaign, shots: [queued_shot, unqueued_shot]) }

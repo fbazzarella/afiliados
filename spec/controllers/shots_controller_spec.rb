@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ShotsController, type: :controller do
   render_views
 
-  describe 'POST #event_postback' do
+  describe 'POST event_postback' do
     def post_event_postback
       post :event_postback
     end

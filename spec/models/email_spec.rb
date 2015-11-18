@@ -17,7 +17,7 @@ RSpec.describe Email, type: :model do
   it { should_not allow_value('Other').for(:verification_result) }
 
   describe 'scopes' do
-    describe '#valid' do
+    describe '.valid' do
       let!(:valid_email) { create(:email, verification_result: 'Ok') }
       let!(:not_valid_email) { create(:email) }
 

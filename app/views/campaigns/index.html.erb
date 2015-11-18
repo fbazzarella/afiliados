@@ -56,9 +56,9 @@
 
         <div class="row list-upload">
           <div class="col-xs-4">
-            <div class="btn btn-xs btn-block btn-default fileinput-button disabled">
+            <div class="btn btn-xs btn-block btn-default fileinput-button">
               <span>
-                Aguardando
+                <%= Email.count %>
               </span>
 
               <input type="file" name="list" data-url="/campaigns/list-upload" accept=".txt,.csv">

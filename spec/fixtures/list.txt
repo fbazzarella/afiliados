@@ -1,2 +1,1 @@
-johndoe@email.com
-janedoe@email.com
+mail-1@example.com; mail-2@example.com

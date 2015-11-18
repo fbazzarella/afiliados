@@ -32,6 +32,7 @@ source 'https://rubygems.org' do
 
   group :test do
     gem 'fuubar'
+    gem 'timecop'
     gem 'shoulda-matchers'
     gem 'factory_girl_rails'
   end

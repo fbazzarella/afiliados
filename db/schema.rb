@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911142927) do
+ActiveRecord::Schema.define(version: 20151118232626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
-  create_table "campaigns", force: true do |t|
+  create_table "campaigns", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "subject"
   end
 
-  create_table "emails", force: true do |t|
+  create_table "emails", force: :cascade do |t|
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -33,7 +33,13 @@ ActiveRecord::Schema.define(version: 20140911142927) do
 
   add_index "emails", ["address"], name: "index_emails_on_address", unique: true, using: :btree
 
-  create_table "shot_events", force: true do |t|
+  create_table "list_imports", force: :cascade do |t|
+    t.string   "file_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shot_events", force: :cascade do |t|
     t.integer  "shot_id"
     t.string   "service"
     t.string   "event"
@@ -44,7 +50,7 @@ ActiveRecord::Schema.define(version: 20140911142927) do
 
   add_index "shot_events", ["shot_id"], name: "index_shot_events_on_shot_id", using: :btree
 
-  create_table "shots", force: true do |t|
+  create_table "shots", force: :cascade do |t|
     t.integer  "email_id"
     t.integer  "campaign_id"
     t.datetime "queued_at"
@@ -56,7 +62,7 @@ ActiveRecord::Schema.define(version: 20140911142927) do
   add_index "shots", ["campaign_id"], name: "index_shots_on_campaign_id", using: :btree
   add_index "shots", ["email_id"], name: "index_shots_on_email_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "username",           default: "", null: false
     t.string   "encrypted_password", default: "", null: false
     t.datetime "created_at"

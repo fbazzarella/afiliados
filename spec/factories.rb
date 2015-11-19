@@ -10,6 +10,8 @@ FactoryGirl.define do
     end
   end
 
+  factory :list_import
+
   factory :shot do
     email
     campaign

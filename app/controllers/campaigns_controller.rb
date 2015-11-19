@@ -3,7 +3,7 @@ class CampaignsController < ApplicationController
   end
 
   def list_upload
-    ListHandler.new(params[:list]).save_to_disk_and_import!
+    ListImport.create(file: params[:list])
 
     head :ok
   end

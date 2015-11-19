@@ -21,20 +21,23 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe 'POST list_upload' do
     context 'when logged in' do
-      pending
+      login!
 
-      # login!
+      let!(:file_path) { File.join(Rails.root, '/spec/fixtures/', 'list.txt') }
+      let!(:fixture)   { Rack::Test::UploadedFile.new(File.open(file_path)) }
 
-      # let!(:file_path) { File.join(Rails.root, '/spec/fixtures/', 'list.txt') }
-      # let!(:fixture)   { Rack::Test::UploadedFile.new(File.open(file_path)) }
+      def post_list_upload
+        post :list_upload, {list: fixture}, format: :json
+      end
 
-      # def post_list_upload
-      #   post :list_upload, {list: fixture}, format: :json
-      # end
+      before { post_list_upload }
 
-      # before { post_list_upload }
+      it do
+        expect(ListImport).to receive(:create).with(file: fixture).once
+        post_list_upload
+      end
 
-      # it { is_expected.to respond_with 200 }
+      it { is_expected.to respond_with 200 }
     end
 
     context 'when logged out' do

@@ -1,21 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe ListHandler do
-  let!(:now)       { Time.now.strftime('%Y%m%d%H%M%S') }
-  let!(:fixture)   { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
+  let!(:now)       { Time.zone.now.strftime('%Y%m%d%H%M%S') }
   let!(:file_path) { File.join(described_class::LISTS_PATH, now) }
+  let!(:fixture)   { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
 
-  before { Timecop.freeze Time.zone.now }
-  after  { Timecop.return }
+  describe '.save_to_disk' do
+    clean_lists!
 
-  subject { described_class.new(fixture) }
+    let!(:returned_value) { described_class.save_to_disk(fixture) }
 
-  describe '.new' do
-    it { expect(subject).to be_a(described_class) }
+    before { Timecop.freeze(Time.zone.now) }
+    after  { Timecop.return }
+
+    it { expect(File.exist?(file_path)).to be_truthy }
+    it { expect(returned_value).to be_eql(file_path) }
   end
 
-  describe '#save_to_disk_and_import!' do
-    before { subject.save_to_disk_and_import! }
+  describe '.import_to_database' do
+    let!(:list_import) { build(:list_import, file_path: file_path) }
+
+    before do
+      File.open(file_path, 'wb') do |f|
+        f.write(described_class.send(:filter_list, fixture))
+      end
+
+      described_class.import_to_database(list_import)
+    end
 
     it { expect(Email.count).to be_eql(2) }
     it { expect(Email.first.address).to be_eql('mail-1@example.com') }

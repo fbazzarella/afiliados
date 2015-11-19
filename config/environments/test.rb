@@ -33,4 +33,8 @@ NewApp::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # ActiveJob::Base.queue_adapter.enqueued_jobs
+  # works only by setting it the queue_adapter into test mode.
+  config.active_job.queue_adapter = :test
 end

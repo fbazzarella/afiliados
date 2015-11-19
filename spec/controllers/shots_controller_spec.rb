@@ -9,7 +9,7 @@ RSpec.describe ShotsController, type: :controller do
     end
 
     it do
-      Shot.should_receive(:postback).with({}).once
+      expect(Shot).to receive(:postback).with({}).once
       post_event_postback
     end
 

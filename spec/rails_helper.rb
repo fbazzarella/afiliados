@@ -18,7 +18,7 @@ RSpec.configure do |config|
   config.color = true
 
   config.mock_with :rspec do |mocks|
-    mocks.syntax = :should
+    mocks.syntax = :expect
   end
 end
 

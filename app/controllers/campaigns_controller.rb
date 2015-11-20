@@ -4,7 +4,6 @@ class CampaignsController < ApplicationController
 
   def list_upload
     ListImport.create(file: params[:list])
-
     head :ok
   end
 end

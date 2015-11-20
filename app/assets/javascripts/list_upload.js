@@ -20,8 +20,8 @@ var initListUpload = function () {
   };
 
   var refreshProgress = function (loaded, total) {
-    var progress = parseInt(loaded / total * 100, 10) + '%';
-
+    var progress = parsePerc(loaded, total);
+    if (progress == '100%') inputLabel.text('Finalizando...');
     progressBar.css('width', progress).text(progress);
   };
 
@@ -35,7 +35,9 @@ var initListUpload = function () {
   };
 
   var uploadStop = function () {
-    inputLabel.text('Envio Concluído');
+    refreshProgress(0, 1);
+    inputLabel.text('Selecione...');
+    inputContainer.removeClass('disabled');
   };
 
   input.fileupload({formData: formData, acceptFileTypes: /(\.|\/)(txt|csv)$/i})

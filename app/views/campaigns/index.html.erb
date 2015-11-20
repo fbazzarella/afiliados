@@ -5,7 +5,7 @@
   <%= form_for :campaign do |f| %>
     <%#= def resource; @campaign; end; devise_error_messages! %>
 
-    <div class="col-xs-12 col-md-9 col-lg-8">
+    <div class="col-xs-12 col-lg-8">
       <fieldset>
         <legend>Detalhes</legend>
 
@@ -35,19 +35,31 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12">
-            <%= f.submit 'Salvar Alterações', class: 'btn btn-primary pull-right' %>
+          <div class="col-xs-4 col-sm-3 col-md-2">
+            <span class="btn btn-xs btn-block btn-primary">
+              Disparar!
+            </span>
+          </div>
+
+          <div class="col-xs-8 col-sm-9 col-md-10 small-gutter">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success"></div>
+            </div>
           </div>
         </div>
       </fieldset>
     </div>
 
-    <div class="col-xs-12 col-md-3 col-lg-4">
+    <div class="col-xs-12 col-lg-4">
       <fieldset>
         <legend>Lista</legend>
 
         <p class="small">
-          Ao selecionar um arquivo com uma lista de emails, o sistema irá importá-lo e disparar a Campanha automaticamente em segundo plano. Porém, antes de selecionar uma lista, você deve criar a Campanha ao lado.
+          Hoje você tem <strong><%= pluralize(Email.count, 'email') %></strong> únicos no banco de dados. Caso queira enviar mais uma lista, o sistema irá importá-la em segundo plano.
+        </p>
+
+        <p class="small">
+          É recomendável aguardar o fim da importação para disparar a campanha e não deixar nenhum email de fora.
         </p>
 
         <hr />
@@ -55,17 +67,17 @@
         <h5>Enviar Lista</h5>
 
         <div class="row list-upload">
-          <div class="col-xs-4">
-            <div class="btn btn-xs btn-block btn-default fileinput-button">
+          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
+            <div class="btn btn-xs btn-block btn-primary fileinput-button">
               <span>
-                <%= Email.count %>
+                Selecione...
               </span>
 
               <input type="file" name="list" data-url="/campaigns/list-upload" accept=".txt,.csv">
             </div>
           </div>
 
-          <div class="col-xs-8 small-gutter">
+          <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
             <div class="progress">
               <div class="progress-bar progress-bar-success"></div>
             </div>
@@ -75,29 +87,13 @@
         <h5>Importar Lista</h5>
 
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
             <span class="btn btn-xs btn-block btn-default disabled">
               Aguardando
             </span>
           </div>
 
-          <div class="col-xs-8 small-gutter">
-            <div class="progress">
-              <div class="progress-bar progress-bar-success"></div>
-            </div>
-          </div>
-        </div>
-
-        <h5>Disparar Campanha</h5>
-
-        <div class="row">
-          <div class="col-xs-4">
-            <span class="btn btn-xs btn-block btn-default disabled">
-              Aguardando
-            </span>
-          </div>
-
-          <div class="col-xs-8 small-gutter">
+          <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
             <div class="progress">
               <div class="progress-bar progress-bar-success"></div>
             </div>

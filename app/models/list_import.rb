@@ -1,8 +1,9 @@
 class ListImport < ActiveRecord::Base
-  attr_accessor :file
+  attr_accessor :file, :uuid
 
   before_validation on: :create do
-    self.file_path = ListHandler.save_to_disk(file)
+    self.uuid    ||= SecureRandom.uuid
+    self.file_path = ListHandler.save_to_disk(file, self.uuid)
   end
 
   after_save on: :create do

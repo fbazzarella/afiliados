@@ -1,17 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe ListHandler do
-  let!(:now)       { Time.zone.now.strftime('%Y%m%d%H%M%S') }
-  let!(:file_path) { File.join(described_class::LISTS_PATH, now) }
+  let!(:uuid)      { SecureRandom.uuid }
+  let!(:file_path) { File.join(described_class::LISTS_PATH, uuid) }
   let!(:fixture)   { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
 
   describe '.save_to_disk' do
     clean_lists!
 
-    let!(:returned_value) { described_class.save_to_disk(fixture) }
-
-    before { Timecop.freeze(Time.zone.now) }
-    after  { Timecop.return }
+    let!(:returned_value) { described_class.save_to_disk(fixture, uuid) }
 
     it { expect(File.exist?(file_path)).to be_truthy }
     it { expect(returned_value).to be_eql(file_path) }

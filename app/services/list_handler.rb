@@ -15,10 +15,15 @@ class ListHandler
     end
 
     def import_to_database(list_import)
-      ar   = ActiveRecord::Base.connection
-      file = File.open(list_import.file_path)
+      ar    = ActiveRecord::Base.connection
+      file  = File.open(list_import.file_path).to_a
+      redis = Redis.new
 
-      file.each_line do |line|
+      publish_params = {
+        total_lines: file.size
+      }
+
+      file.each_with_index do |line, i|
         now = Time.zone.now
         sql = %Q(
           INSERT INTO emails
@@ -28,6 +33,7 @@ class ListHandler
         )
 
         begin
+          redis.publish('list:import-progress', publish_params.merge!(imported_lines: i + 1).to_json)
           ar.execute(sql)
         rescue Exception => msg
           Rails.logger.warn "Exception: #{msg}"

@@ -28,6 +28,10 @@ RSpec.describe ListHandler do
       described_class.import_to_database(list_import)
     end
 
+    describe 'redis pub/sub' do
+      pending
+    end
+
     it { expect(Email.count).to be_eql(2) }
     it { expect(Email.first.address).to be_eql('mail-1@example.com') }
     it { expect(Email.last.address).to be_eql('mail-2@example.com') }

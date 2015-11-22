@@ -22,7 +22,7 @@ source 'https://rubygems.org' do
   gem 'exception_notification'
 
   group :development do
-    gem 'thin'
+    gem 'puma'
     gem 'quiet_assets'
   end
 

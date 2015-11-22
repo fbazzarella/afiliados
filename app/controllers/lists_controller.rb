@@ -12,7 +12,7 @@ class ListsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
 
     Redis.new.subscribe('list:import-progress') do |on|
-      on.message { |e, data| sse.write(JSON.dump(data)) }
+      on.message { |e, data| sse.write(data) }
     end
   ensure
     sse.close

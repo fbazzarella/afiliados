@@ -9,8 +9,13 @@ NewApp::Application.routes.draw do
     mount Sidekiq::Web, at: '/sidekiq'
   end
 
-  resources :campaigns, only: :index do
-    post 'list-upload', as: :list_upload, on: :collection
+  resources :campaigns, only: [:index, :create]
+
+  resources :lists, only: [] do
+    collection do
+      post 'upload',          as: :upload
+      get  'import-progress', as: :import_progress
+    end
   end
 
   resources :shots, only: [] do

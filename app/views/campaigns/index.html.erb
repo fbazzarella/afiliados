@@ -2,7 +2,7 @@
 <p>Aqui você pode definir o remetente, o assunto, colar o HTML da tela, selecionar a lista de destinatários e acompanhar o progresso dos envios.</p>
 
 <div class="row">
-  <%= form_for :campaign do |f| %>
+  <%= form_for :campaign, url: campaigns_path do |f| %>
     <%#= def resource; @campaign; end; devise_error_messages! %>
 
     <div class="col-xs-12 col-lg-8">
@@ -29,22 +29,14 @@
           <div class="col-xs-12">
             <div class="form-group">
               <label for="campaign_html">HTML</label>
-              <%= f.text_area :html, class: 'form-control' %>
+              <%= f.text_area :body, class: 'form-control' %>
             </div>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-xs-4 col-sm-3 col-md-2">
-            <span class="btn btn-xs btn-block btn-primary">
-              Disparar!
-            </span>
-          </div>
-
-          <div class="col-xs-8 col-sm-9 col-md-10 small-gutter">
-            <div class="progress">
-              <div class="progress-bar progress-bar-success"></div>
-            </div>
+          <div class="col-xs-12">
+            <input type="submit" class="btn btn-primary pull-right" value="Disparar Campanha!">
           </div>
         </div>
       </fieldset>
@@ -55,11 +47,11 @@
         <legend>Lista</legend>
 
         <p class="small">
-          Hoje você tem <strong><%= pluralize(Email.count, 'email') %></strong> únicos no banco de dados. Caso queira enviar mais uma lista, o sistema irá importá-la em segundo plano.
+          Emails únicos no banco de dados: <strong class="email-count"><%= Email.count %></strong>
         </p>
 
         <p class="small">
-          É recomendável aguardar o fim da importação para disparar a campanha e não deixar nenhum email de fora.
+           Caso queira enviar mais uma lista, o sistema irá importá-la em segundo plano. É recomendável aguardar o fim da importação para disparar a campanha e não deixar nenhum email de fora.
         </p>
 
         <hr />
@@ -73,20 +65,20 @@
                 Selecione...
               </span>
 
-              <input type="file" name="list" data-url="/campaigns/list-upload" accept=".txt,.csv">
+              <input type="file" name="list" data-url="/lists/upload" accept=".txt,.csv">
             </div>
           </div>
 
           <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
-            <div class="progress">
-              <div class="progress-bar progress-bar-success"></div>
+            <div class="progress progress-striped active">
+              <div class="progress-bar progress-bar-primary"></div>
             </div>
           </div>
         </div>
 
         <h5>Importar Lista</h5>
 
-        <div class="row">
+        <div class="row list-import">
           <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
             <span class="btn btn-xs btn-block btn-default disabled">
               Aguardando
@@ -94,8 +86,8 @@
           </div>
 
           <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
-            <div class="progress">
-              <div class="progress-bar progress-bar-success"></div>
+            <div class="progress progress-striped active">
+              <div class="progress-bar progress-bar-primary"></div>
             </div>
           </div>
         </div>

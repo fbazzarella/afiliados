@@ -21,13 +21,20 @@ var initListUpload = function () {
 
   var refreshProgress = function (loaded, total) {
     var progress = parsePerc(loaded, total);
-    if (progress == '100%') inputLabel.text('Finalizando...');
-    progressBar.css('width', progress).text(progress);
+
+    if (progress > 0 && progress < 100) {
+      inputLabel.text(progress + '%');
+    } else if (progress == 100) {
+      inputLabel.text('Finalizando...');
+    } else {
+      inputLabel.text('Selecione...');
+    };
+
+    progressBar.css('width', progress + '%');
   };
 
   var uploadStart = function () {
     inputContainer.addClass('disabled');
-    inputLabel.text('Enviando...');
   };
 
   var progressAll = function (e, data) {
@@ -36,12 +43,11 @@ var initListUpload = function () {
 
   var uploadStop = function () {
     refreshProgress(0, 1);
-    inputLabel.text('Selecione...');
     inputContainer.removeClass('disabled');
   };
 
   input.fileupload({formData: formData, acceptFileTypes: /(\.|\/)(txt|csv)$/i})
-    .bind('fileuploadstart', uploadStart)
+    .bind('fileuploadstart',       uploadStart)
     .bind('fileuploadprogressall', progressAll)
-    .bind('fileuploadstop', uploadStop);
+    .bind('fileuploadstop',        uploadStop);
 };

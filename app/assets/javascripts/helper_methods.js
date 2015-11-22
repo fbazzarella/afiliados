@@ -1,3 +1,3 @@
 var parsePerc = function (partial, total) {
-  return parseInt(partial / total * 100, 10) + '%';
+  return parseInt(partial / total * 100, 10);
 };

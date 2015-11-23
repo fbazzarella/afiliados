@@ -1,5 +1,7 @@
 source 'https://rubygems.org' do
   gem 'rails', '4.2.4'
+  gem 'foreman'
+  gem 'puma'
   gem 'pg'
 
   gem 'devise'
@@ -20,7 +22,6 @@ source 'https://rubygems.org' do
   gem 'exception_notification'
 
   group :development do
-    gem 'puma'
     gem 'quiet_assets'
   end
 

@@ -4,20 +4,18 @@ common: &common
   pool:     30
 
 local: &local
+  <<: *common
   username: postgres
 
 development:
-  <<: *common
   <<: *local
   database: newapp_development
 
 test:
-  <<: *common
   <<: *local
   database: newapp_test
 
 staging:
-  <<: *common
   <<: *local
   database: newapp_staging
 

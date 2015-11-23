@@ -1,9 +1,12 @@
 /.bundle
+/.env
+/.ruby-version
 /log/*.log
 /tmp
 
+/config/environments/production.rb
+/config/environments/staging.rb
 /config/database.yml
-/config/environment_variables.rb
 /config/mypg.yml
 /config/shuttle.yml
 /public/assets

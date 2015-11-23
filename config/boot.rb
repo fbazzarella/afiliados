@@ -5,5 +5,13 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 
 # Load the custom environment variables.
 begin
-  require File.expand_path('../environment_variables', __FILE__)
-rescue LoadError; end
+  File.open(File.expand_path('../../.env', __FILE__), 'r') do |f|
+    f.each_line do |line|
+      next if line == "\n" || line.match(/^#/) || line.match(/^PATH/)
+
+      line = line.gsub("\n", '').split('=')
+
+      ENV[line.first] = line.last
+    end
+  end
+rescue Errno::ENOENT; end

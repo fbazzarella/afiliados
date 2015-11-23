@@ -16,12 +16,19 @@ namespace :monit do
   private
 
   def do_(action)
-    sh "echo '#{ENV['APP_PASSWORD']}' | sudo -S monit #{action.to_s} #{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}"
+    common = "echo '#{ENV['APP_PASSWORD']}' | sudo -S monit #{action.to_s} #{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}"
+
+    sh "#{common}-web"
+    sh "#{common}-worker"
   end
 end
 
-namespace :puma do
-  task restart: :environment do
-    sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}.pid)"
+namespace :restart do
+  task puma: :environment do
+    sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}-web.pid)"
+  end
+
+  task sidekiq: :environment do
+    sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}-worker.pid)"
   end
 end

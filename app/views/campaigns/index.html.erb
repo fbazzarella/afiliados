@@ -43,50 +43,46 @@
     </div>
 
     <div class="col-xs-12 col-lg-4">
-      <fieldset>
+      <fieldset class="list">
         <legend>Lista</legend>
 
         <p class="small">
-          Emails únicos no banco de dados: <strong class="email-count"><%= Email.count %></strong>
+          Emails únicos no banco de dados: <strong class="total-email-count"><%= Email.count %></strong>
         </p>
 
         <p class="small">
            Caso queira enviar mais uma lista, o sistema irá importá-la em segundo plano. É recomendável aguardar o fim da importação para disparar a campanha e não deixar nenhum email de fora.
         </p>
 
-        <hr />
-
-        <h5>Enviar Lista</h5>
-
-        <div class="row list-upload">
-          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
-            <div class="btn btn-xs btn-block btn-primary fileinput-button">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="btn btn-sm btn-primary choose fileinput-button">
               <span>
-                Selecione...
+                Selecione uma Lista...
               </span>
 
               <input type="file" name="list" data-url="/lists/upload" accept=".txt,.csv">
             </div>
           </div>
+        </div>
 
-          <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
-            <div class="progress progress-striped active">
+        <hr />
+
+        <h5>Envio</h5>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="upload progress progress-striped">
               <div class="progress-bar progress-bar-primary"></div>
             </div>
           </div>
         </div>
 
-        <h5>Importar Lista</h5>
+        <h5>Importação</h5>
 
-        <div class="row list-import">
-          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
-            <span class="btn btn-xs btn-block btn-default disabled">
-              Aguardando
-            </span>
-          </div>
-
-          <div class="col-xs-8 col-sm-9 col-md-10 col-lg-8 small-gutter">
-            <div class="progress progress-striped active">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="import progress progress-striped">
               <div class="progress-bar progress-bar-primary"></div>
             </div>
           </div>

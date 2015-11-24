@@ -18,7 +18,10 @@ class ListHandler
       file  = File.open(list_import.file_path)
 
       redis   = Redis.new
-      publish = {imported_lines: -1}
+      publish = {
+        imported_lines: -1,
+        email_increased: 0
+      }
 
       file.each_line do |line|
         publish[:imported_lines] += 1
@@ -39,8 +42,10 @@ class ListHandler
 
         begin
           ar.execute sql
+          publish[:email_increased] = 1
         rescue Exception => msg
           Rails.logger.warn "Exception: #{msg}"
+          publish[:email_increased] = 0
         end
 
         redis.publish 'list:import-progress', publish.to_json

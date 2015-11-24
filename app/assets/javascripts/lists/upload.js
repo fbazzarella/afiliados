@@ -1,9 +1,9 @@
 var initListUpload = function () {
-  var listUpload     = $('.list-upload'),
-      progressBar    = listUpload.find('.progress-bar'),
-      inputContainer = listUpload.find('.fileinput-button'),
+  var inputContainer = $('.choose.fileinput-button'),
       inputLabel     = inputContainer.find('span'),
       input          = inputContainer.find('input');
+
+  var progressBar = $('.upload .progress-bar');
 
   var formData = function (form) {
     var formFields     = form.serializeArray(),
@@ -19,31 +19,17 @@ var initListUpload = function () {
     return filteredFields;
   };
 
-  var refreshProgress = function (loaded, total) {
-    var progress = parsePerc(loaded, total);
-
-    if (progress > 0 && progress < 100) {
-      inputLabel.text(progress + '%');
-    } else if (progress == 100) {
-      inputLabel.text('Finalizando...');
-    } else {
-      inputLabel.text('Selecione...');
-    };
-
-    progressBar.css('width', progress + '%');
-  };
-
   var uploadStart = function () {
     inputContainer.addClass('disabled');
+    inputLabel.text('Aguarde a Importação...');
   };
 
   var progressAll = function (e, data) {
-    refreshProgress(data.loaded, data.total);
+    refreshProgress(progressBar, data.loaded, data.total);
   };
 
   var uploadStop = function () {
-    refreshProgress(0, 1);
-    inputContainer.removeClass('disabled');
+    initListImport();
   };
 
   input.fileupload({formData: formData, acceptFileTypes: /(\.|\/)(txt|csv)$/i})

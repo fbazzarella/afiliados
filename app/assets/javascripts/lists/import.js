@@ -9,7 +9,7 @@ var initListImport = function () {
   sseListImport.addEventListener('message', function (e) {
     var data = JSON.parse(e.data);
 
-    totalEmailCount.text(parseInt(totalEmailCount.text()) + data.email_increased);
+    totalEmailCount.text(data.total_email_count);
 
     refreshProgress(progressBar, data.imported_lines, data.total_lines);
 

@@ -26,15 +26,3 @@ namespace :monit do
     sh "#{common}-worker"
   end
 end
-
-namespace :restart do
-  task all: %i(puma sidekiq)
-
-  task puma: :environment do
-    sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}-web.pid)"
-  end
-
-  task sidekiq: :environment do
-    sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}-worker.pid)"
-  end
-end

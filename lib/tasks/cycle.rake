@@ -13,6 +13,10 @@ namespace :monit do
     do_ :restart
   end
 
+  task stop: :environment do
+    do_ :stop
+  end
+
   private
 
   def do_(action)
@@ -24,6 +28,8 @@ namespace :monit do
 end
 
 namespace :restart do
+  task all: %i(puma sidekiq)
+
   task puma: :environment do
     sh "kill -10 $(cat /tmp/#{ENV['APP_NAME']}-#{ENV['RAILS_ENV']}-web.pid)"
   end

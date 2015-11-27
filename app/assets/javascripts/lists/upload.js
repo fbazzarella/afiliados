@@ -28,12 +28,7 @@ var initListUpload = function () {
     refreshProgress(progressBar, data.loaded, data.total);
   };
 
-  var uploadStop = function () {
-    initListImport();
-  };
-
   input.fileupload({formData: formData, acceptFileTypes: /(\.|\/)(txt|csv)$/i})
     .bind('fileuploadstart',       uploadStart)
-    .bind('fileuploadprogressall', progressAll)
-    .bind('fileuploadstop',        uploadStop);
+    .bind('fileuploadprogressall', progressAll);
 };

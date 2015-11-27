@@ -15,38 +15,34 @@ class ListHandler
 
     def import_to_database(list_import)
       ar    = ActiveRecord::Base.connection
-      file  = File.open(list_import.file_path)
+      redis = Redis.new
 
-      redis   = Redis.new
-      publish = {imported_lines: -1}
+      publish_data = {imported_lines: -1}
 
-      file.each_line do |line|
-        publish[:imported_lines] += 1
+      File.open(list_import.file_path).each_line do |line|
+        publish_data[:imported_lines] += 1
 
-        if publish[:imported_lines].zero?
-          publish.merge!(total_lines: line.to_i)
+        if publish_data[:imported_lines].zero?
+          publish_data.merge! lines_count: line.to_i
           next
         end
 
-        now = Time.zone.now
-
-        sql = %Q(
-          INSERT INTO emails
-            (address, created_at, updated_at)
-          VALUES
-            ('#{line.strip}', '#{now}', '#{now}')
-        )
-
         begin
-          ar.execute sql
+          ar.execute %Q(
+            INSERT INTO emails (address, created_at, updated_at)
+            VALUES ('#{line.strip}', '#{Time.zone.now}', '#{Time.zone.now}')
+          )
         rescue Exception => msg
           Rails.logger.warn "Exception: #{msg}"
         end
 
-        if (publish[:imported_lines] % 1000).zero? || publish[:imported_lines] == publish[:total_lines]
-          publish.merge!(total_email_count: Email.count)
+        if should_publish?(publish_data)
+          new_data = {
+            emails_count: Email.count,
+            finished:     import_finished?(publish_data)
+          }
 
-          redis.publish 'list:import-progress', publish.to_json
+          redis.publish 'list:import-progress', publish_data.merge!(new_data).to_json
         end
       end
 
@@ -67,6 +63,15 @@ class ListHandler
           file.unshift("#{file.size}")
         end.join("\n")
       end
+    end
+
+    def should_publish?(publish_data)
+      line = publish_data[:imported_lines]
+      line % 1000 == 0 || line == publish_data[:lines_count]
+    end
+
+    def import_finished?(publish_data)
+      publish_data[:imported_lines] == publish_data[:lines_count]
     end
   end
 end

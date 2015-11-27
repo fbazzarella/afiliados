@@ -37,4 +37,9 @@ NewApp::Application.configure do
   # ActiveJob::Base.queue_adapter.enqueued_jobs
   # works only by setting it the queue_adapter into test mode.
   config.active_job.queue_adapter = :test
+
+  # DEPRECATION WARNING: Currently, Active Record suppresses errors raised within `after_rollback`/`after_commit` callbacks and only print them to the logs.
+  # In the next version, these errors will no longer be suppressed. Instead, the errors will propagate normally just like in other Active Record callbacks.
+  # You can opt into the new behavior and remove this warning by setting:
+  config.active_record.raise_in_transactional_callbacks = true
 end

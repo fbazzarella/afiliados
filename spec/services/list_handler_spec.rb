@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ListHandler do
+  clean_lists!
+
   let!(:uuid)      { SecureRandom.uuid }
   let!(:file_path) { File.join(described_class::LISTS_PATH, uuid) }
   let!(:fixture)   { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
 
   describe '.save_to_disk' do
-    clean_lists!
-
     let!(:returned_value) { described_class.save_to_disk(fixture, uuid) }
 
     it { expect(File.exist?(file_path)).to be_truthy }

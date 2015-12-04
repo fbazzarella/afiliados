@@ -33,12 +33,12 @@ module NewApp
 
     config.action_mailer.smtp_settings = {
       address:   ENV['SMTP_ADDRESS'],
-      port:      587,
+      port:      ENV['SMTP_PORT'] || 587,
       domain:    ENV['SMTP_DOMAIN'],
       user_name: ENV['SMTP_USERNAME'],
       password:  ENV['SMTP_PASSWORD'],
       authentication: :plain,
-      enable_starttls_auto: true
+      enable_starttls_auto: false
     }
 
     # HTML generated for form fields with error

@@ -6,7 +6,7 @@ RSpec.describe CampaignMailer, type: :mailer do
 
     subject { CampaignMailer.shot(shot) }
 
-    it { expect(subject.header['From'].to_s).to be_eql('Felipe Bazzarella <felipe@bazzarella.com>') }
+    it { expect(subject.header['From'].to_s).to be_eql(ENV['SMTP_FROM']) }
     it { expect(subject.header['To'].to_s).to be_eql(shot.email.address) }
 
     it { expect(subject.header['X-Shot-Id'].to_s.to_i).to be_eql(shot.id) }

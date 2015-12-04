@@ -13,7 +13,7 @@
           <div class="col-xs-12 col-md-6">
             <div class="form-group">
               <label for="campaign_from">Remetente</label>
-              <%= f.text_field :from, class: 'form-control' %>
+              <%= f.text_field :from, class: 'form-control', value: ENV['SMTP_FROM'] %>
             </div>
           </div>
 

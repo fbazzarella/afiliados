@@ -66,8 +66,7 @@ class ListHandler
     end
 
     def should_publish?(publish_data)
-      line = publish_data[:imported_lines]
-      line % 1000 == 0 || line == publish_data[:lines_count]
+      publish_data[:imported_lines] % 1000 == 0 || import_finished?(publish_data)
     end
 
     def import_finished?(publish_data)

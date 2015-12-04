@@ -1,5 +1,5 @@
 class CampaignMailer < ActionMailer::Base
-  default from: 'Felipe Bazzarella <felipe@bazzarella.com>'
+  default from: ENV['SMTP_FROM']
 
   def self.delivered_email(mail)
     shot_id = mail.header['X-Shot-Id'].to_s.to_i
@@ -13,7 +13,11 @@ class CampaignMailer < ActionMailer::Base
   end
 
   def send_campaign(email_params)
-    mail(email_params)
+    body = email_params.delete('body')
+
+    mail(email_params) do |format|
+      format.html { render html: body.html_safe }
+    end
   end
 
   private

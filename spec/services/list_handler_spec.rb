@@ -15,14 +15,14 @@ RSpec.describe ListHandler do
   end
 
   describe '.import_to_database' do
-    let!(:list_import) { build(:list_import, file_path: file_path) }
+    let!(:list) { build(:list, file_path: file_path) }
 
     before do
       File.open(file_path, 'wb') do |f|
         f.write(described_class.send(:filter_list, fixture))
       end
 
-      described_class.import_to_database(list_import)
+      described_class.import_to_database(list)
     end
 
     describe 'redis pub/sub' do

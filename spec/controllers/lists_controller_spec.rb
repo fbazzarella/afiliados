@@ -33,7 +33,7 @@ RSpec.describe ListsController, type: :controller do
       before { post_create }
 
       it do
-        expect(ListImport).to receive(:create).with(file: fixture).once
+        expect(List).to receive(:create).with(file: fixture).once
         post_create
       end
 

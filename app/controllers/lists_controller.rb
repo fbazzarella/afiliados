@@ -3,7 +3,7 @@ class ListsController < ApplicationController
   end
 
   def create
-    ListImport.create(file: params[:list])
+    List.create(file: params[:list])
     head :ok
   end
 end

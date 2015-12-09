@@ -1,4 +1,4 @@
-class ListImport < ActiveRecord::Base
+class List < ActiveRecord::Base
   attr_accessor :file, :uuid
 
   before_validation on: :create do

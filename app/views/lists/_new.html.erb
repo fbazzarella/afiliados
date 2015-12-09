@@ -1,0 +1,35 @@
+<div class="modal fade" id="new-list" tabindex="-1" role="dialog" aria-labelledby="new-list-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="new-list-title">Nova Lista</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <%= form_for :list do %>
+              <div class="btn btn-sm btn-primary btn-block fileinput-button">
+                <span>Selecionar...</span>
+                <input type="file" name="list" accept=".txt,.csv">
+              </div>
+            <% end %>
+          </div>
+
+          <div class="col-xs-9" style="padding-left: 0">
+            <div class="progress progress-striped">
+              <div class="progress-bar progress-bar-primary">0%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="Fechar">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

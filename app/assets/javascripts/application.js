@@ -21,9 +21,7 @@
 //= require_tree .
 
 $(function () {
-  if (!!$('.campaigns_index')[0]) {
-    initListUpload();
-  };
+  if (!!$('.lists-index')[0]) initListUpload();
 
   // $('a[rel~=popover], .has-popover').popover();
   // $('a[rel~=tooltip], .has-tooltip').tooltip();

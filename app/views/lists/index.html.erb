@@ -1,8 +1,10 @@
+<%= render 'new' %>
+
 <h1>
   Listas
-  <%= link_to '#', class: 'btn btn-sm btn-primary' do %>
-    <%= glyph(:plus) %> Adicionar
-  <% end %>
+  <button type="button" class="btn btn-sm btn-primary btn-new" data-toggle="modal" data-target="#new-list">
+    <%= glyph(:plus, {}) %> Nova Lista
+  </button>
 </h1>
 
 <div class="table-responsive">

@@ -11,6 +11,6 @@ var refreshProgress = function (progressBar, loaded, total) {
   if (progress > 0 && progress <= 100) {
     progressBar.text(prettyProgress);
   } else {
-    progressBar.text('');
+    progressBar.text('0%');
   };
 };

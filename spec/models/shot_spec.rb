@@ -11,7 +11,7 @@ RSpec.describe Shot, type: :model do
 
   describe 'scopes' do
     describe '.queued' do
-      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:queued_shot) { create(:shot, queued_at: Time.current) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
       it { expect(described_class.queued).to_not include(unqueued_shot) }
@@ -19,7 +19,7 @@ RSpec.describe Shot, type: :model do
     end
 
     describe '.unqueued' do
-      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:queued_shot) { create(:shot, queued_at: Time.current) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
 
       it { expect(described_class.unqueued).to include(unqueued_shot) }
@@ -27,7 +27,7 @@ RSpec.describe Shot, type: :model do
     end
 
     describe '.relayed' do
-      let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
+      let!(:relayed_shot) { create(:shot, relayed_at: Time.current) }
       let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
 
       it { expect(described_class.relayed).to_not include(unrelayed_shot) }
@@ -35,7 +35,7 @@ RSpec.describe Shot, type: :model do
     end
 
     describe '.unrelayed' do
-      let!(:relayed_shot) { create(:shot, relayed_at: Time.zone.now) }
+      let!(:relayed_shot) { create(:shot, relayed_at: Time.current) }
       let!(:unrelayed_shot) { create(:shot, relayed_at: nil) }
 
       it { expect(described_class.unrelayed).to include(unrelayed_shot) }

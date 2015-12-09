@@ -30,7 +30,7 @@ class ListHandler
         begin
           ar.execute %Q(
             INSERT INTO emails (address, created_at, updated_at)
-            VALUES ('#{line.strip}', '#{Time.zone.now}', '#{Time.zone.now}')
+            VALUES ('#{line.strip}', '#{Time.current}', '#{Time.current}')
           )
         rescue Exception => msg
           Rails.logger.warn "Exception: #{msg}"

@@ -5,9 +5,9 @@ RSpec.describe List, type: :model do
   it { should respond_to(:uuid) }
 
   describe 'callbacks' do
-    let!(:uuid)        { SecureRandom.uuid }
-    let!(:fixture)     { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
-    let!(:list) { build(:list, file: fixture, uuid: uuid) }
+    let!(:uuid)    { SecureRandom.uuid }
+    let!(:fixture) { File.open(File.join(Rails.root, '/spec/fixtures/', 'list.txt')) }
+    let!(:list)    { build(:list, file: fixture, uuid: uuid) }
 
     before :all do
       TestAfterCommit.enabled = true

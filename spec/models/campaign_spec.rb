@@ -45,7 +45,7 @@ RSpec.describe Campaign, type: :model do
     end
 
     describe '#decrease_chase' do
-      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:queued_shot) { create(:shot, queued_at: Time.current) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
       let!(:campaign) { create(:campaign, shots: [queued_shot, unqueued_shot]) }
 
@@ -60,7 +60,7 @@ RSpec.describe Campaign, type: :model do
     end
 
     describe '#chase' do
-      let!(:queued_shot) { create(:shot, queued_at: Time.zone.now) }
+      let!(:queued_shot) { create(:shot, queued_at: Time.current) }
       let!(:unqueued_shot) { create(:shot, queued_at: nil) }
       let!(:campaign) { create(:campaign, shots: [queued_shot, unqueued_shot]) }
 

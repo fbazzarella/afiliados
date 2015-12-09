@@ -1,5 +1,4 @@
 <h1>Campanhas</h1>
-<p>Aqui você pode definir o remetente, o assunto, colar o HTML da tela, selecionar a lista de destinatários e acompanhar o progresso dos envios.</p>
 
 <div class="row">
   <%= form_for :campaign, url: campaigns_path do |f| %>
@@ -61,7 +60,7 @@
                 Selecione uma Lista...
               </span>
 
-              <input type="file" name="list" data-url="/lists/upload" accept=".txt,.csv">
+              <input type="file" name="list" data-url="/lists" accept=".txt,.csv">
             </div>
           </div>
         </div>

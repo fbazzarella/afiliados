@@ -11,11 +11,10 @@ NewApp::Application.routes.draw do
 
   resources :campaigns, only: [:index, :create]
 
-  resources :lists, only: [] do
-    collection do
-      post 'upload',          as: :upload
-      get  'import-progress', as: :import_progress
-    end
+  resources :lists, only: [:index, :create]
+
+  resources :imports, only: [] do
+    get 'progress', as: :progress, on: :collection
   end
 
   resources :shots, only: [] do

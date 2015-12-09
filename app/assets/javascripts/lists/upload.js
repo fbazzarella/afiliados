@@ -22,6 +22,8 @@ var initListUpload = function () {
   var uploadStart = function () {
     inputContainer.addClass('disabled');
     inputLabel.text('Aguarde a Importação...');
+
+    initListImport();
   };
 
   var progressAll = function (e, data) {

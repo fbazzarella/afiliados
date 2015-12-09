@@ -3,35 +3,47 @@ require 'rails_helper'
 RSpec.describe ListsController, type: :controller do
   render_views
 
-  describe 'POST upload' do
+  describe 'GET index' do
+    context 'when logged in' do
+      login!
+
+      before { get :index }
+
+      it { is_expected.to respond_with 200 }
+    end
+
+    context 'when logged out' do
+      before { get :index }
+
+      it { is_expected.to redirect_to(new_user_session_path) }
+    end
+  end
+
+  describe 'POST create' do
     context 'when logged in' do
       login!
 
       let!(:file_path) { File.join(Rails.root, '/spec/fixtures/', 'list.txt') }
       let!(:fixture)   { Rack::Test::UploadedFile.new(File.open(file_path)) }
 
-      def post_upload
-        post :upload, {list: fixture}, format: :json
+      def post_create
+        post :create, {list: fixture}, format: :json
       end
 
-      before { post_upload }
+      before { post_create }
 
       it do
         expect(ListImport).to receive(:create).with(file: fixture).once
-        post_upload
+        post_create
       end
 
       it { is_expected.to respond_with 200 }
     end
 
     context 'when logged out' do
-      before { post :upload, format: :json }
+      before { post :create, format: :json }
 
-      xit { is_expected.to respond_with 401 }
+      it { is_expected.to respond_with 401 }
     end
-  end
-
-  describe 'POST import_progress' do
-    pending
   end
 end

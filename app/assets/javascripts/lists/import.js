@@ -2,7 +2,7 @@ var initListImport = function () {
   var inputContainer = $('.choose.fileinput-button'),
       inputLabel     = inputContainer.find('span');
 
-  var sseListImport = new EventSource('/lists/import-progress'),
+  var sseListImport = new EventSource('/imports/progress'),
       emailsCount   = $('.emails-count'),
       progressBar   = $('.import .progress-bar');
 

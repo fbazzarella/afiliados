@@ -23,7 +23,6 @@
 $(function () {
   if (!!$('.campaigns_index')[0]) {
     initListUpload();
-    initListImport();
   };
 
   // $('a[rel~=popover], .has-popover').popover();

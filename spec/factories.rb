@@ -10,7 +10,9 @@ FactoryGirl.define do
     end
   end
 
-  factory :list
+  factory :list do
+    file Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/list.txt')))
+  end
 
   factory :shot do
     email

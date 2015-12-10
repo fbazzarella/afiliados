@@ -22,20 +22,14 @@ RSpec.describe ListsController, type: :controller do
   describe 'POST create' do
     context 'when logged in' do
       login!
-
-      let!(:file_path) { File.join(Rails.root, '/spec/fixtures/', 'list.txt') }
-      let!(:fixture)   { Rack::Test::UploadedFile.new(File.open(file_path)) }
-
+  
       def post_create
-        post :create, {list: fixture}, format: :json
+        post :create, {list: attributes_for(:list)}, format: :json
       end
 
       before { post_create }
 
-      it do
-        expect(List).to receive(:create).with(file: fixture).once
-        post_create
-      end
+      it { expect(response.body).to match("\"id\":#{List.last.id}") }
 
       it { is_expected.to respond_with 200 }
     end

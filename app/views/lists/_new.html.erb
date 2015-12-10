@@ -14,7 +14,7 @@
             <%= form_for :list do %>
               <div class="btn btn-sm btn-primary btn-block fileinput-button">
                 <span>Selecionar...</span>
-                <input type="file" name="list" accept=".txt,.csv">
+                <input type="file" name="list[file]" accept=".csv,.txt" multiple="true">
               </div>
             <% end %>
           </div>

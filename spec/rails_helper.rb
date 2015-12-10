@@ -20,6 +20,10 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.syntax = :expect
   end
+
+  config.after :suite do
+    FileUtils.rm_rf("#{Rails.root}/tmp/lists/test")
+  end
 end
 
 Shoulda::Matchers.configure do |config|

@@ -1,16 +1,11 @@
 class List < ActiveRecord::Base
-  attr_accessor :file, :uuid
+  mount_uploader :file, ListUploader
 
-  before_validation on: :create do
-    self.uuid    ||= SecureRandom.uuid
-    self.file_path = ListHandler.save_to_disk(file, self.uuid)
-  end
-
-  after_commit on: :create do
+  after_save on: :create do
     ListImportJob.perform_later(self)
   end
 
-  after_commit on: :destroy do
-    FileUtils.rm(self.file_path)
+  def to_json
+    {id: id}
   end
 end

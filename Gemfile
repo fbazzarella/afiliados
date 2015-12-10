@@ -34,7 +34,6 @@ source 'https://rubygems.org' do
     gem 'fuubar'
     gem 'shoulda-matchers'
     gem 'factory_girl_rails'
-    gem 'test_after_commit'
   end
 end
 

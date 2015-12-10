@@ -3,7 +3,12 @@ class ListsController < ApplicationController
   end
 
   def create
-    List.create(file: params[:list])
-    head :ok
+    render json: List.create(list_params).to_json
+  end
+
+  private
+
+  def list_params
+    params.require(:list).permit(:file)
   end
 end

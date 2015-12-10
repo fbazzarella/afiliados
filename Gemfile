@@ -9,6 +9,7 @@ source 'https://rubygems.org' do
   gem 'sidekiq'
   gem 'kaminari'
   gem 'responders'
+  gem 'carrierwave'
 
   gem 'less-rails'
   gem 'sass-rails'

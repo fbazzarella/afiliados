@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe List, type: :model do
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:file) }
+
   describe '#to_json' do
     let!(:list) { create(:list) }
 
@@ -10,12 +13,20 @@ RSpec.describe List, type: :model do
   end
 
   describe 'callbacks' do
-    let!(:list) { build(:list) }
-
     describe 'on create' do
-      after { list.save }
+      describe 'before_validation' do
+        let!(:fixture) { File.open(File.join(Rails.root, '/spec/fixtures/list.txt')) }
+        let!(:file)    { Rack::Test::UploadedFile.new(fixture) }
+        let!(:list)    { create(:list, file: file) }
+
+        it { expect(list.name).to be_eql('list.txt') }
+      end
 
       describe 'after_save' do
+        let!(:list) { build(:list) }
+
+        after { list.save }
+
         it { expect(ListImportJob).to receive(:perform_later).with(list).once }
       end
     end

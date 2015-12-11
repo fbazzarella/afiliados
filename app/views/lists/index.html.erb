@@ -1,21 +1,37 @@
 <%= render 'new' %>
 
-<h1>
-  Listas
-  <button type="button" class="btn btn-sm btn-primary btn-new" data-toggle="modal" data-target="#new-list">
-    <%= glyph(:plus, {}) %> Nova Lista
-  </button>
-</h1>
+<% if @lists.any? %>
+  <h1>
+    Listas
+    <button type="button" class="btn btn-sm btn-primary btn-new" data-toggle="modal" data-target="#new-list">
+      <%= glyph(:plus, {}) %> Nova Lista
+    </button>
+  </h1>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nome do Arquivo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Lista de Exemplo.txt</td></tr>
-    </tbody>
-  </table>
-</div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome do Arquivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @lists.each do |list| %>
+          <tr><td><%= list.name %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <h1>Listas</h1>
+
+    <h3><strong>Você ainda não criou nenhuma lista :/</strong></h3>
+
+    <p>Antes de começar a criar suas campanhas, você precisa enviar uma lista com o email dos seus clientes. Fazer isso é muito simples. Basta clicar no botão abaixo e escolher uma lista salva no seu PC, Notebook, Tablet ou Smartphone :)</p>
+
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#new-list">
+      <%= glyph(:plus, {}) %> Nova Lista
+    </button>
+  </div>
+<% end %>

@@ -7,7 +7,12 @@ RSpec.describe ListsController, type: :controller do
     context 'when logged in' do
       login!
 
+      let!(:list) { create(:list) }
+
       before { get :index }
+
+      it { expect(assigns(:lists)).to be_a(ActiveRecord::Relation) }
+      it { expect(assigns(:lists)).to include(list) }
 
       it { is_expected.to respond_with 200 }
     end

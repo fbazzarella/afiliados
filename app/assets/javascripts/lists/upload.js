@@ -38,13 +38,14 @@ var initListUpload = function () {
 
   var uploadStop = function () {
     inputLabel.text('Concluído');
-  }
+    location.reload();
+  };
 
   var resetModalState = function () {
     inputContainer.removeClass('disabled');
     inputLabel.text('Selecionar...')
     refreshProgress(progressBar, 0, 1);
-  }
+  };
 
   input.fileupload({formData: formData, acceptFileTypes: /(\.|\/)(txt|csv)$/i})
     .bind('fileuploadadd',         uploadAdd)

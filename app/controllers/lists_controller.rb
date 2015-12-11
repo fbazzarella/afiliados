@@ -1,10 +1,14 @@
 class ListsController < ApplicationController
   def index
-    @lists = List.order(:name)
+    respond_with @lists = List.order(:name)
   end
 
   def create
     render json: List.create(list_params).to_json
+  end
+
+  def destroy
+    respond_with @list = List.destroy(params[:id]), location: lists_path
   end
 
   private

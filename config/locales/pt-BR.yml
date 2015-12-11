@@ -8,6 +8,14 @@
       destroy:
         notice: 'Usuário excluído com sucesso.'
         alert: 'O Usuário não pôde ser excluído.'
+    lists:
+      create:
+        notice: 'Lista criada com sucesso.'
+      update:
+        notice: 'Lista atualizada com sucesso.'
+      destroy:
+        notice: 'Lista excluída com sucesso.'
+        alert: 'A Lista não pôde ser excluída.'
   activerecord:
     errors:
       messages:

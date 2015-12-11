@@ -45,4 +45,30 @@ RSpec.describe ListsController, type: :controller do
       it { is_expected.to respond_with 401 }
     end
   end
+
+  describe 'DELETE destroy' do
+    context 'when logged in' do
+      login!
+
+      context 'when valid id' do
+        let!(:list)  { create(:list) }
+
+        before { delete :destroy, id: list.id }
+
+        it { expect(List.count).to be_zero }
+
+        it { is_expected.to redirect_to(lists_path) }
+      end
+
+      context 'when invalid id' do
+        it { expect{ delete :destroy, id: 1 }.to raise_error(ActiveRecord::RecordNotFound) }
+      end
+    end
+
+    context 'when logged out' do
+      before { delete :destroy, id: 1 }
+
+      it { is_expected.to redirect_to(new_user_session_path) }
+    end
+  end
 end

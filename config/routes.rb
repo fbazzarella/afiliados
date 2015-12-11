@@ -11,7 +11,7 @@ NewApp::Application.routes.draw do
 
   resources :campaigns, only: [:index, :create]
 
-  resources :lists, only: [:index, :create]
+  resources :lists, only: [:index, :create, :destroy]
 
   resources :imports, only: [] do
     get 'progress', as: :progress, on: :collection

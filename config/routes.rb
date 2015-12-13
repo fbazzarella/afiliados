@@ -9,9 +9,9 @@ NewApp::Application.routes.draw do
     mount Sidekiq::Web, at: '/sidekiq'
   end
 
-  resources :campaigns, only: [:index, :create]
-
-  resources :lists, only: [:index, :create, :destroy]
+  resources :campaigns,   only: [:index, :create]
+  resources :lists,       only: [:index, :create, :destroy]
+  resources :newsletters, only: [:index, :create, :destroy]
 
   resources :imports, only: [] do
     get 'progress', as: :progress, on: :collection

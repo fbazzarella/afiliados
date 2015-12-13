@@ -1,4 +1,4 @@
-var initListUpload = function () {
+var initListNew = function () {
   var modalContainer = $('#new-list'),
       uploadRequest  = null;
 
@@ -53,9 +53,9 @@ var initListUpload = function () {
     .bind('fileuploadprogressall', progressAll)
     .bind('fileuploadstop',        uploadStop);
 
-  modalContainer.on('hide.bs.modal', function (e) {
+  modalContainer.on('hide.bs.modal', function () {
     if (uploadRequest) uploadRequest.abort();
-  }).on('hidden.bs.modal', function (e) {
+  }).on('hidden.bs.modal', function () {
     resetModalState();
   });
 };

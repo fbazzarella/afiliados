@@ -1,0 +1,45 @@
+<%= render 'new' %>
+
+<% if @newsletters.any? %>
+  <h1>
+    Newsletters
+    <button type="button" class="btn btn-sm btn-primary btn-new" data-toggle="modal" data-target="#new-newsletter">
+      <%= glyph(:plus, {}) %> Nova Newsletter
+    </button>
+  </h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Assunto</th>
+          <th colspan="2">Remetente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @newsletters.each do |newsletter| %>
+          <tr>
+            <td><%= newsletter.subject %></td>
+            <td><%= newsletter.from %></td>
+
+            <td class="right">
+              <%= link_to glyph(:trash, {}), newsletter_path(newsletter), title: 'Excluir Newsletter', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta newsletter?'}, class: 'btn btn-xs btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <h1>Newsletters</h1>
+
+    <h3><strong>Você ainda não criou nenhuma newsletter :/</strong></h3>
+
+    <p>Antes de começar a criar suas campanhas, você precisa criar uma newsletter com as informações que gostaria de divulgar. Fazer isso é muito simples. Basta clicar no botão abaixo e preencher as informações necessárias.</p>
+
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#new-newsletter">
+      <%= glyph(:plus, {}) %> Nova Newsletter
+    </button>
+  </div>
+<% end %>

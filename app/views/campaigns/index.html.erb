@@ -1,44 +1,7 @@
-<h1>Campanhas</h1>
+<div class="jumbotron">
+  <h1>Campanhas</h1>
 
-<div class="row">
-  <%= form_for :campaign, url: campaigns_path do |f| %>
-    <%#= def resource; @campaign; end; devise_error_messages! %>
+  <h3><strong>Você ainda não criou nenhuma campanha :/</strong></h3>
 
-    <div class="col-xs-12 col-lg-8">
-      <fieldset>
-        <legend>Detalhes</legend>
-
-        <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <div class="form-group">
-              <label for="campaign_from">Remetente</label>
-              <%= f.text_field :from, class: 'form-control', value: ENV['SMTP_FROM'] %>
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-md-6">
-            <div class="form-group">
-              <label for="campaign_subject">Assunto</label>
-              <%= f.text_field :subject, class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <label for="campaign_html">HTML</label>
-              <%= f.text_area :body, class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <input type="submit" class="btn btn-primary pull-right" value="Disparar Campanha!">
-          </div>
-        </div>
-      </fieldset>
-    </div>
-  <% end %>
+  <p>Antes de começar a criar suas campanhas, você precisa enviar uma lista e criar uma newsletter com as informações que gostaria de divulgar. Fazer isso é muito simples. Basta navegar pelo menu no topo da página e seguir as informações da tela. Depois, é só retornar aqui para continuar com a criação de sua campanha :)</p>
 </div>

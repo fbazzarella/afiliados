@@ -18,11 +18,10 @@
       <tbody>
         <% @lists.each do |list| %>
           <tr>
-            <td>
-              <%= list.name %>
-            </td>
+            <td><%= list.name %></td>
+
             <td class="right">
-              <%= link_to glyph(:trash, {}), list_path(list), data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>
+              <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>
             </td>
           </tr>
         <% end %>

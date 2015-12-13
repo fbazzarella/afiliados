@@ -16,6 +16,14 @@
       destroy:
         notice: 'Lista excluída com sucesso.'
         alert: 'A Lista não pôde ser excluída.'
+    newsletters:
+      create:
+        notice: 'Newsletter criada com sucesso.'
+      update:
+        notice: 'Newsletter atualizada com sucesso.'
+      destroy:
+        notice: 'Newsletter excluída com sucesso.'
+        alert: 'A Newsletter não pôde ser excluída.'
   activerecord:
     errors:
       messages:

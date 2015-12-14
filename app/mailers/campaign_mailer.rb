@@ -9,7 +9,7 @@ class CampaignMailer < ActionMailer::Base
   def shot(shot)
     @shot = shot
     add_custom_headers(@shot)
-    mail(to: @shot.email.address, subject: @shot.campaign.subject)
+    mail(to: @shot.list_item.email.address, subject: @shot.campaign.subject)
   end
 
   def send_campaign(email_params)

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Email, type: :model do
-  it { should have_many(:shots).dependent(:restrict_with_error) }
-  it { should have_many(:campaigns).through(:shots) }
+  it { should have_many(:list_items).dependent(:restrict_with_error) }
+  it { should have_many(:lists).through(:list_items) }
 
   it { should validate_presence_of(:address) }
   it { should validate_uniqueness_of(:address) }

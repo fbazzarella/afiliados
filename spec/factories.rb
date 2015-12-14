@@ -14,6 +14,11 @@ FactoryGirl.define do
     file Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/list.txt')))
   end
 
+  factory :list_item do
+    list
+    email
+  end
+
   factory :newsletter do
     from    'From Name <mail-1@example.com>'
     subject 'Newsletter Subject'
@@ -21,7 +26,7 @@ FactoryGirl.define do
   end
 
   factory :shot do
-    email
+    list_item
     campaign
   end
 

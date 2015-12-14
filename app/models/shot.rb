@@ -1,12 +1,12 @@
 class Shot < ActiveRecord::Base
   has_many :shot_events, dependent: :restrict_with_error
-  belongs_to :email
+  belongs_to :list_item
   belongs_to :campaign
 
-  validates :email_id, :campaign_id, presence: true
-  validates :email_id, uniqueness: {scope: :campaign_id}
+  validates :list_item_id, :campaign_id, presence: true
+  validates :list_item_id, uniqueness: {scope: :campaign_id}
 
-  # default_scope -> { includes(:email, :campaign) }
+  # default_scope -> { includes(:list_item, :campaign) }
 
   scope :queued,   -> { where.not(queued_at: nil) }
   scope :unqueued, -> { where(queued_at: nil) }

@@ -1,7 +1,35 @@
-<div class="jumbotron">
-  <h1>Campanhas</h1>
+<%= render 'new' %>
 
-  <h3><strong>Você ainda não criou nenhuma campanha :/</strong></h3>
+<% if @campaigns.any? %>
+  <h1>
+    Campanhas
+    <button type="button" class="btn btn-sm btn-primary btn-new" data-toggle="modal" data-target="#new-campaign">
+      <%= glyph(:plus, {}) %> Nova Campanha
+    </button>
+  </h1>
 
-  <p>Antes de começar a criar suas campanhas, você precisa enviar uma lista e criar uma newsletter com as informações que gostaria de divulgar. Fazer isso é muito simples. Basta navegar pelo menu no topo da página e seguir as informações da tela. Depois, é só retornar aqui para continuar com a criação de sua campanha :)</p>
-</div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome da Campanha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @campaigns.each do |campaign| %>
+          <tr>
+            <td><%= campaign.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <h1>Campanhas</h1>
+
+    <h3><strong>Você ainda não criou nenhuma campanha :/</strong></h3>
+
+    <p>Antes de começar a criar suas campanhas, você precisa enviar uma lista e criar uma newsletter com as informações que gostaria de divulgar. Fazer isso é muito simples. Basta navegar pelo menu no topo da página e seguir as informações da tela. Depois, é só retornar aqui para continuar com a criação de sua campanha :)</p>
+  </div>
+<% end %>

@@ -1,8 +1,10 @@
 class Campaign < ActiveRecord::Base
-  has_many :shots, dependent: :restrict_with_error
+  belongs_to :newsletter
+
+  has_many :shots, dependent: :destroy
   has_many :list_items, through: :shots
 
-  validates :name, :subject, presence: true
+  validates :name, presence: true
 
   # def prepare_chase!(nof)
   #   delay.increase_chase(nof) if nof > shots.count

@@ -9,15 +9,7 @@ class CampaignMailer < ActionMailer::Base
   def shot(shot)
     @shot = shot
     add_custom_headers(@shot)
-    mail(to: @shot.list_item.email.address, subject: @shot.campaign.subject)
-  end
-
-  def send_campaign(email_params)
-    body = email_params.delete('body')
-
-    mail(email_params) do |format|
-      format.html { render html: body.html_safe }
-    end
+    mail(to: @shot.list_item.email.address, subject: @shot.campaign.name)
   end
 
   private

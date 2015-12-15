@@ -1,19 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe List, type: :model do
-  it { should have_many(:list_items).dependent(:nullify) }
+  it { should have_many(:list_items).dependent(:destroy) }
   it { should have_many(:emails).through(:list_items) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:file) }
-
-  describe '#to_json' do
-    let!(:list) { create(:list) }
-
-    subject { list.to_json }
-
-    it { expect(subject[:id]).to be_eql(list.id) }
-  end
 
   describe 'callbacks' do
     describe 'on create' do
@@ -33,5 +25,13 @@ RSpec.describe List, type: :model do
         it { expect(ListImportJob).to receive(:perform_later).with(list).once }
       end
     end
+  end
+
+  describe '#to_json' do
+    let!(:list) { create(:list) }
+
+    subject { list.to_json }
+
+    it { expect(subject[:id]).to be_eql(list.id) }
   end
 end

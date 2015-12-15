@@ -1,1 +1,1 @@
-# ActionMailer::Base.register_observer(CampaignMailer)
+ActionMailer::Base.register_observer(CampaignMailer)

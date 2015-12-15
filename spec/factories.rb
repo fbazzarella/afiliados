@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :campaign do
-    name    'Campaign Name'
-    subject 'Campaign Subject'
+    name 'Campaign Name'
   end
 
   factory :email do

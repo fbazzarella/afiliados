@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Shot, type: :model do
   it { should belong_to(:list_item) }
   it { should belong_to(:campaign) }
-  it { should have_many(:shot_events).dependent(:restrict_with_error) }
+
+  it { should have_many(:shot_events).dependent(:destroy) }
 
   it { should validate_presence_of(:list_item_id) }
   it { should validate_presence_of(:campaign_id) }

@@ -1,7 +1,8 @@
 class Shot < ActiveRecord::Base
-  has_many :shot_events, dependent: :restrict_with_error
   belongs_to :list_item
   belongs_to :campaign
+
+  has_many :shot_events, dependent: :destroy
 
   validates :list_item_id, :campaign_id, presence: true
   validates :list_item_id, uniqueness: {scope: :campaign_id}

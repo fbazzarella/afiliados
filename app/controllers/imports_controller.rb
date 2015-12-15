@@ -8,13 +8,9 @@ class ImportsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
 
     redis.subscribe('list:import-progress') do |on|
-      on.message do |e, data|
-        sse.write(data)
-        sse.close if JSON.parse(data)['finished']
-      end
+      on.message { |e, data| sse.write(data) }
     end
-  rescue IOError
-  ensure
+  rescue IOError; ensure
     redis.quit
     sse.close
   end

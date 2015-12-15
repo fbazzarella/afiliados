@@ -1,7 +1,7 @@
 class ListImportJob < ActiveJob::Base
-  queue_as :default
+  queue_as :lists
 
   def perform(list)
-    ListHandler.import_to_database(list)
+    ListHandler.import(list)
   end
 end

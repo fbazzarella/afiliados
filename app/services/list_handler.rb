@@ -1,76 +1,63 @@
 class ListHandler
-  LISTS_PATH = File.join(Rails.root, '/tmp/lists/')
-
   class << self
-    def save_to_disk(file, uuid)
-      persist_lists_path!
+    def import(list)
+      return if not list.file.present?
 
-      file_path = File.join(LISTS_PATH, uuid)
-
-      File.open(file_path, 'wb') do |f|
-        f.write(filter_list(file))
-        file_path
-      end
-    end
-
-    def import_to_database(list_import)
       ar    = ActiveRecord::Base.connection
       redis = Redis.new
 
-      publish_data = {imported_lines: -1}
+      data = {list_id: list.id, imported_lines: -1}
 
-      File.open(list_import.file_path).each_line do |line|
-        publish_data[:imported_lines] += 1
+      filter(list.file).each do |line|
+        data[:imported_lines] += 1
 
-        if publish_data[:imported_lines].zero?
-          publish_data.merge! lines_count: line.to_i
+        if data[:imported_lines].zero?
+          data.merge! lines_count: line
           next
         end
 
-        begin
-          ar.execute %Q(
-            INSERT INTO emails (address, created_at, updated_at)
-            VALUES ('#{line.strip}', '#{Time.current}', '#{Time.current}')
-          )
-        rescue Exception => msg
-          Rails.logger.warn "Exception: #{msg}"
-        end
+        persist line, data[:list_id], ar
 
-        if should_publish?(publish_data)
-          new_data = {
-            emails_count: Email.count,
-            finished:     import_finished?(publish_data)
-          }
-
-          redis.publish 'list:import-progress', publish_data.merge!(new_data).to_json
-        end
+        publish data, redis
       end
 
-      list_import.destroy
+      list.remove_file!
     end
 
     private
 
-    def persist_lists_path!
-      FileUtils.mkdir_p(LISTS_PATH) if not File.exist?(LISTS_PATH)
+    def persist(email, list_id, ar)
+      ar.execute %Q(
+        INSERT INTO emails (address, created_at, updated_at)
+        VALUES ('#{email}', '#{Time.current}', '#{Time.current}')
+      )
+    rescue Exception; ensure
+      ar.execute %Q(
+        INSERT INTO list_items (list_id, email_id, created_at, updated_at)
+        VALUES ('#{list_id}', (
+          SELECT id FROM emails WHERE address = '#{email}'
+        ), '#{Time.current}', '#{Time.current}')
+      )
     end
 
-    def filter_list(file)
-      if file.present?
-        filter_pattern = /([a-zA-Z0-9._%+-]+@(?:[-a-z0-9]+\.)+[a-z]{2,})/
+    def filter(file)
+      filter_pattern = /([a-zA-Z0-9._%+-]+@(?:[-a-z0-9]+\.)+[a-z]{2,})/
 
-        file.read.scan(filter_pattern).flatten.tap do |file|
-          file.unshift("#{file.size}")
-        end.join("\n")
+      file.read.scan(filter_pattern).flatten.uniq.tap do |file|
+        file.unshift file.size
       end
     end
 
-    def should_publish?(publish_data)
-      publish_data[:imported_lines] % 1000 == 0 || import_finished?(publish_data)
+    def publish(data, redis)
+      redis.publish 'list:import-progress', data.to_json if should_publish?(data)
     end
 
-    def import_finished?(publish_data)
-      publish_data[:imported_lines] == publish_data[:lines_count]
+    def should_publish?(data)
+      data[:imported_lines] % 1000 == 0 || import_finished?(data)
+    end
+
+    def import_finished?(data)
+      data[:imported_lines] == data[:lines_count]
     end
   end
 end

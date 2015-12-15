@@ -21,8 +21,14 @@
 //= require_tree .
 
 $(function () {
-  if (!!$('.lists-index')[0]) initListNew();
-  if (!!$('.newsletters-index')[0]) initNewsletterNew();
+  if (!!$('.lists-index')[0]) {
+    initListIndex();
+    initListNew();
+  };
+
+  if (!!$('.newsletters-index')[0]) {
+    initNewsletterNew();
+  };
 
   // $('a[rel~=popover], .has-popover').popover();
   // $('a[rel~=tooltip], .has-tooltip').tooltip();

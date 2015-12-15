@@ -12,13 +12,15 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th colspan="2">Nome do Arquivo</th>
+          <th>Nome do Arquivo</th>
+          <th colspan="2">Emails Únicos</th>
         </tr>
       </thead>
       <tbody>
         <% @lists.each do |list| %>
           <tr>
             <td><%= list.name %></td>
+            <td class="emails-count-<%= list.id %>"><%= list.list_items.count %></td>
 
             <td class="right">
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>

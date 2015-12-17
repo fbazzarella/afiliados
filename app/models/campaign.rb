@@ -42,6 +42,6 @@ class Campaign < ActiveRecord::Base
   # end
 
   # def chase
-  #   shots.unqueued.each(&:shot!)
+  #   shots.unqueued.each(&:shoot!)
   # end
 end

@@ -84,11 +84,11 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.send(:mailgun_params, params)).to be_eql(expected_params) }
     end
 
-    describe '#shot!' do
+    describe '#shoot!' do
       let!(:shot) { create(:shot) }
 
-      it { expect{ shot.send(:shot!) }.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1) }
-      it { expect{ shot.send(:shot!); shot.reload }.to change(shot, :queued_at) }
+      it { expect{ shot.send(:shoot!) }.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1) }
+      it { expect{ shot.send(:shoot!); shot.reload }.to change(shot, :queued_at) }
     end
   end
 end

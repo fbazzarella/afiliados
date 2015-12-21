@@ -6,10 +6,10 @@ class Campaign < ActiveRecord::Base
 
   validates :name, presence: true
 
-  # def prepare_chase!(nof)
-  #   delay.increase_chase(nof) if nof > shots.count
-  #   delay.decrease_chase(nof) if nof < shots.count
-  # end
+  def prepare_chase!(list_ids)
+    delay.increase_chase(list_ids)
+    self
+  end
 
   # def recover_chase!
   #   unless Sidekiq::Queue.new('default').any?
@@ -17,19 +17,21 @@ class Campaign < ActiveRecord::Base
   #   end
   # end
 
-  # def chase!
-  #   delay.chase
-  # end
+  def chase!
+    delay.chase
+  end
 
-  # private
+  private
 
-  # def increase_chase(nof)
-  #   email_ids = Email.valid.pluck(:id)
+  def increase_chase(list_ids)
+    list_ids.each do |list_id|
+      List.find(list_id).list_items.each do |list_item|
+        shots.create(list_item_id: list_item.id)
+      end
+    end
 
-  #   while shots.count < nof and shots.count < email_ids.size
-  #     shots.create(email_id: email_ids.sample)
-  #   end
-  # end
+    update_attribute(:chase_prepared, true)
+  end
 
   # def decrease_chase(nof)
   #   while shots.unqueued.count > nof - shots.queued.count and shots.unqueued.count > 0
@@ -41,7 +43,7 @@ class Campaign < ActiveRecord::Base
   #   shots.queued.unrelayed.update_all(queued_at: nil)
   # end
 
-  # def chase
-  #   shots.unqueued.each(&:shoot!)
-  # end
+  def chase
+    shots.unqueued.each(&:shoot!)
+  end
 end

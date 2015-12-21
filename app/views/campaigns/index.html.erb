@@ -13,16 +13,33 @@
       <thead>
         <tr>
           <th>Nome da Campanha</th>
+          <th colspan="2">Status</th>
         </tr>
       </thead>
       <tbody>
         <% @campaigns.each do |campaign| %>
           <tr>
             <td><%= campaign.name %></td>
+            <td><%= campaign.chase_prepared ? 'Pronta para Disparar' : 'Preparando' %></td>
+            <td class="right">
+              <%= link_to 'Disparar!', campaign_chase_path(campaign), class: "btn btn-xs btn-success #{'disabled' if not campaign.chase_prepared}" %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+  </div>
+<% elsif List.where(import_finished: true).any? && Newsletter.any? %>
+  <div class="jumbotron">
+    <h1>Campanhas</h1>
+
+    <h3><strong>Você ainda não criou nenhuma campanha :/</strong></h3>
+
+    <p>Chegou a hora de criar suas campanhas e divulgar seus produtos e serviços. Fazer isso é muito simples. Basta clicar no botão abaixo para escolher uma lista de clientes e qual newsletter deseja enviar.</p>
+
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#new-campaign">
+      <%= glyph(:plus, {}) %> Nova Campanha
+    </button>
   </div>
 <% else %>
   <div class="jumbotron">

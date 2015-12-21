@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-xs-4 col-sm-3">
-            <%= form_for :list do %>
+            <%= form_for :list, url: lists_path do %>
               <div class="btn btn-sm btn-primary btn-block fileinput-button">
                 <span>Selecionar...</span>
                 <input type="file" name="list[file]" accept=".csv,.txt" multiple="true">

@@ -13,7 +13,8 @@
       <thead>
         <tr>
           <th>Nome do Arquivo</th>
-          <th colspan="2">Emails Únicos</th>
+          <th>Emails Únicos</th>
+          <th colspan="2">Importação</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <tr>
             <td><%= list.name %></td>
             <td class="emails-count-<%= list.id %>"><%= list.list_items.count %></td>
+            <td><%= list.import_finished ? 'Concluída' : 'Em Andamento' %></td>
 
             <td class="right">
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>

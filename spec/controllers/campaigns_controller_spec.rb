@@ -23,4 +23,12 @@ RSpec.describe CampaignsController, type: :controller do
       it { is_expected.to redirect_to(new_user_session_path) }
     end
   end
+
+  describe 'POST create' do
+    pending
+  end
+
+  describe 'GET chase' do
+    pending
+  end
 end

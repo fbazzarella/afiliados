@@ -9,7 +9,10 @@ NewApp::Application.routes.draw do
     mount Sidekiq::Web, at: '/sidekiq'
   end
 
-  resources :campaigns,   only: [:index, :create]
+  resources :campaigns,   only: [:index, :create] do
+    get 'chase', as: :chase
+  end
+
   resources :lists,       only: [:index, :create, :destroy]
   resources :newsletters, only: [:index, :create, :destroy]
 

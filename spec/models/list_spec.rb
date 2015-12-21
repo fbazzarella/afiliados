@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe List, type: :model do
-  it { should have_many(:list_items).dependent(:destroy) }
+  it { should have_many(:list_items).dependent(:nullify) }
   it { should have_many(:emails).through(:list_items) }
 
   it { should validate_presence_of(:name) }

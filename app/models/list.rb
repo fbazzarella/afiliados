@@ -1,7 +1,7 @@
 class List < ActiveRecord::Base
   mount_uploader :file, ListUploader
 
-  has_many :list_items, dependent: :destroy
+  has_many :list_items, dependent: :nullify
   has_many :emails, through: :list_items
 
   validates :name, presence: true

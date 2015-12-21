@@ -22,6 +22,7 @@ class ListHandler
       end
 
       list.remove_file!
+      list.update_attribute(:import_finished, true)
     end
 
     private

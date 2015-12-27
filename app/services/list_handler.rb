@@ -22,7 +22,7 @@ class ListHandler
       end
 
       list.remove_file!
-      list.update_attribute(:import_finished, true)
+      list.update_attribute :import_finished, true
     end
 
     private
@@ -30,14 +30,14 @@ class ListHandler
     def persist(email, list_id, ar)
       ar.execute %Q(
         INSERT INTO emails (address, created_at, updated_at)
-        VALUES ('#{email}', '#{Time.current}', '#{Time.current}')
+        VALUES ('#{email}', '#{Time.now}', '#{Time.now}')
       )
     rescue Exception; ensure
       ar.execute %Q(
         INSERT INTO list_items (list_id, email_id, created_at, updated_at)
         VALUES ('#{list_id}', (
           SELECT id FROM emails WHERE address = '#{email}'
-        ), '#{Time.current}', '#{Time.current}')
+        ), '#{Time.now}', '#{Time.now}')
       )
     end
 

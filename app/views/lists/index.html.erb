@@ -14,6 +14,7 @@
         <tr>
           <th>Nome do Arquivo</th>
           <th>Emails Únicos</th>
+          <th>Emails Válidos</th>
           <th colspan="2">Importação</th>
         </tr>
       </thead>
@@ -22,6 +23,7 @@
           <tr>
             <td><%= list.name %></td>
             <td class="emails-count-<%= list.id %>"><%= list.list_items.count %></td>
+            <td class="valid-emails-count-<%= list.id %>"><%= list.list_items.valid.count %></td>
             <td><%= list.import_finished ? 'Concluída' : 'Em Andamento' %></td>
 
             <td class="right">

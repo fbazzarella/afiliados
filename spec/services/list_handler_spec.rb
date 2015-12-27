@@ -25,5 +25,9 @@ RSpec.describe ListHandler do
     describe '.import_finished?' do
       pending
     end
+
+    describe '.is_valid?' do
+      pending
+    end
   end
 end

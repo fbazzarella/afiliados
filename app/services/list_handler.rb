@@ -16,7 +16,7 @@ class ListHandler
           next
         end
 
-        persist line, data[:list_id], ar
+        persist line, is_valid?(line), data[:list_id], ar
 
         publish data, redis
       end
@@ -27,10 +27,10 @@ class ListHandler
 
     private
 
-    def persist(email, list_id, ar)
+    def persist(email, verification_result, list_id, ar)
       ar.execute %Q(
-        INSERT INTO emails (address, created_at, updated_at)
-        VALUES ('#{email}', '#{Time.now}', '#{Time.now}')
+        INSERT INTO emails (address, verification_result, created_at, updated_at)
+        VALUES ('#{email}', '#{verification_result}', '#{Time.now}', '#{Time.now}')
       )
     rescue Exception; ensure
       ar.execute %Q(
@@ -59,6 +59,10 @@ class ListHandler
 
     def import_finished?(data)
       data[:imported_lines] == data[:lines_count]
+    end
+
+    def is_valid?(email)
+      system("python lib/validate_address.py #{email}") ? 'Ok' : 'Bad'
     end
   end
 end

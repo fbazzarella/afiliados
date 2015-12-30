@@ -27,6 +27,8 @@
             <td><%= list.import_finished ? 'Concluída' : 'Em Andamento' %></td>
 
             <td class="right">
+              <%= link_to glyph(:download, {}), list_download_path(list, format: :txt), title: 'Baixar Lista Validada', class: 'btn btn-xs btn-primary' %>
+
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>
             </td>
           </tr>

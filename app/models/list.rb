@@ -1,3 +1,5 @@
+require 'csv'
+
 class List < ActiveRecord::Base
   mount_uploader :file, ListUploader
 
@@ -18,5 +20,13 @@ class List < ActiveRecord::Base
 
   def to_json
     {id: id}
+  end
+
+  def to_csv
+    CSV.generate do |csv|
+      list_items.valid.each do |list_item|
+        csv << [list_item.email.address]
+      end
+    end
   end
 end

@@ -11,6 +11,10 @@ class ListsController < ApplicationController
     respond_with @list = List.destroy(params[:id]), location: lists_path
   end
 
+  def download
+    send_data List.find(params[:list_id]).to_csv
+  end
+
   private
 
   def list_params

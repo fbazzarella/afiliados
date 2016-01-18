@@ -6,11 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-if Rails.env.development?
-  User.destroy_all
+def truncate_tables!
+  %w(campaigns emails list_items lists newsletters shot_events shots users).each do |table_name|
+    ActiveRecord::Base.connection.execute("delete from #{table_name}")
+  end
+end
+
+# if Rails.env.development?
+  truncate_tables!
   
   User.create({
     username: 'johndoe',
     password: 'secret'
   })
-end
+# end

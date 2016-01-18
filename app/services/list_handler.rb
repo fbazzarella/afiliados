@@ -62,7 +62,9 @@ class ListHandler
     end
 
     def is_valid?(email)
-      system("python lib/validate_address.py #{email}") ? 'Ok' : 'Bad'
+      EmailVerifier.check(email) ? 'Ok' : 'Bad'
+    rescue Exception
+      'Bad'
     end
   end
 end

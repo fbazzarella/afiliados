@@ -70,6 +70,9 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dnsruby (1.59.1)
+    email_verifier (0.1.0)
+      dnsruby (>= 1.5)
     erubis (2.7.0)
     exception_notification (4.1.2)
       actionmailer (~> 4.0)
@@ -239,6 +242,7 @@ DEPENDENCIES
   awesome_print!
   carrierwave!
   devise!
+  email_verifier!
   exception_notification!
   factory_girl_rails!
   foreman!
@@ -264,3 +268,6 @@ DEPENDENCIES
   therubyracer!
   twitter-bootstrap-rails!
   uglifier!
+
+BUNDLED WITH
+   1.10.6

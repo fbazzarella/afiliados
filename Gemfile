@@ -10,6 +10,7 @@ source 'https://rubygems.org' do
   gem 'kaminari'
   gem 'responders'
   gem 'carrierwave'
+  gem 'email_verifier'
 
   gem 'less-rails'
   gem 'sass-rails'

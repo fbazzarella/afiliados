@@ -38,7 +38,7 @@ module NewApp
       user_name: ENV['SMTP_USERNAME'],
       password:  ENV['SMTP_PASSWORD'],
       authentication: :plain,
-      enable_starttls_auto: false
+      enable_starttls_auto: true
     }
 
     # HTML generated for form fields with error

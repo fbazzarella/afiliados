@@ -19,6 +19,8 @@ class Campaign < ActiveRecord::Base
 
   def chase!
     delay.chase
+
+    update_attribute(:status, 'Disparando')
   end
 
   private
@@ -30,7 +32,7 @@ class Campaign < ActiveRecord::Base
       end
     end
 
-    update_attribute(:chase_prepared, true)
+    update_attribute(:status, 'Pronta para Disparar')
   end
 
   # def decrease_chase(nof)

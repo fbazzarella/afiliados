@@ -7,6 +7,7 @@ source 'https://rubygems.org' do
   gem 'devise'
   gem 'sinatra'
   gem 'sidekiq'
+  gem 'nokogiri'
   gem 'kaminari'
   gem 'responders'
   gem 'carrierwave'

@@ -20,7 +20,7 @@ class Campaign < ActiveRecord::Base
   def chase!
     delay.chase
 
-    update_attribute(:status, 'Disparando')
+    # update_attribute(:status, 'Disparando')
   end
 
   private

@@ -25,5 +25,12 @@ NewApp::Application.routes.draw do
 
   resources :shots, only: [] do
     post 'event-postback', on: :collection
+
+    member do
+      get 'opened'
+      get 'unsubscribed'
+    end
   end
+
+  resources :links, only: [:show]
 end

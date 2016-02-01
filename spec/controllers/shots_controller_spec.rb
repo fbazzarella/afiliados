@@ -18,4 +18,12 @@ RSpec.describe ShotsController, type: :controller do
       is_expected.to respond_with 200
     end
   end
+
+  describe 'GET opened' do
+    pending
+  end
+
+  describe 'GET unsubscribed' do
+    pending
+  end
 end

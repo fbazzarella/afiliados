@@ -3,6 +3,7 @@ class Shot < ActiveRecord::Base
   belongs_to :campaign
 
   has_many :shot_events, dependent: :destroy
+  has_many :links,       dependent: :destroy
 
   validates :list_item_id, :campaign_id, presence: true
   validates :list_item_id, uniqueness: {scope: :campaign_id}

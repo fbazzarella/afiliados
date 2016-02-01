@@ -5,6 +5,7 @@ RSpec.describe Shot, type: :model do
   it { should belong_to(:campaign) }
 
   it { should have_many(:shot_events).dependent(:destroy) }
+  it { should have_many(:links).dependent(:destroy) }
 
   it { should validate_presence_of(:list_item_id) }
   it { should validate_presence_of(:campaign_id) }

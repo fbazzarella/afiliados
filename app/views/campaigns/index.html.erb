@@ -18,19 +18,22 @@
           <th>Enviados</th>
           <th>Entregues</th>
           <th>Abertos</th>
-          <th colspan="2">Clicados</th>
+          <th>Clicados</th>
+          <th>Descadastrados</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @campaigns.each do |campaign| %>
           <tr>
             <td><%= campaign.name %></td>
-            <td><%= campaign.list_items.count == campaign.shots.queued.count ? 'Disparada' : campaign.status %></td>
-            <td><%= campaign.list_items.count %></td>
+            <td><%= campaign.shots.count == campaign.shots.queued.count ? 'Disparada' : campaign.status %></td>
+            <td><%= campaign.shots.count %></td>
             <td><%= campaign.shots.queued.count %></td>
             <td><%= campaign.shots.relayed.count %></td>
-            <td>0</td>
-            <td>0</td>
+            <td><%= campaign.shots.opened.count %></td>
+            <td><%= campaign.shots.clicked.count %></td>
+            <td><%= campaign.shots.unsubscribed.count %></td>
             <td class="right">
               <%= link_to 'Disparar!', campaign_chase_path(campaign), class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
             </td>

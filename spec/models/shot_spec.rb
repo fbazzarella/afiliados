@@ -43,6 +43,54 @@ RSpec.describe Shot, type: :model do
       it { expect(described_class.unrelayed).to include(unrelayed_shot) }
       it { expect(described_class.unrelayed).to_not include(relayed_shot) }
     end
+
+    describe '.opened' do
+      let!(:opened_shot) { create(:shot, opened_at: Time.current) }
+      let!(:unopened_shot) { create(:shot, opened_at: nil) }
+
+      it { expect(described_class.opened).to_not include(unopened_shot) }
+      it { expect(described_class.opened).to include(opened_shot) }
+    end
+
+    describe '.unopened' do
+      let!(:opened_shot) { create(:shot, opened_at: Time.current) }
+      let!(:unopened_shot) { create(:shot, opened_at: nil) }
+
+      it { expect(described_class.unopened).to include(unopened_shot) }
+      it { expect(described_class.unopened).to_not include(opened_shot) }
+    end
+
+    describe '.clicked' do
+      let!(:clicked_shot) { create(:shot, clicked_at: Time.current) }
+      let!(:unclicked_shot) { create(:shot, clicked_at: nil) }
+
+      it { expect(described_class.clicked).to_not include(unclicked_shot) }
+      it { expect(described_class.clicked).to include(clicked_shot) }
+    end
+
+    describe '.unclicked' do
+      let!(:clicked_shot) { create(:shot, clicked_at: Time.current) }
+      let!(:unclicked_shot) { create(:shot, clicked_at: nil) }
+
+      it { expect(described_class.unclicked).to include(unclicked_shot) }
+      it { expect(described_class.unclicked).to_not include(clicked_shot) }
+    end
+
+    describe '.unsubscribed' do
+      let!(:unsubscribed_shot) { create(:shot, unsubscribed_at: Time.current) }
+      let!(:subscribed_shot) { create(:shot, unsubscribed_at: nil) }
+
+      it { expect(described_class.unsubscribed).to_not include(subscribed_shot) }
+      it { expect(described_class.unsubscribed).to include(unsubscribed_shot) }
+    end
+
+    describe '.subscribed' do
+      let!(:unsubscribed_shot) { create(:shot, unsubscribed_at: Time.current) }
+      let!(:subscribed_shot) { create(:shot, unsubscribed_at: nil) }
+
+      it { expect(described_class.subscribed).to include(subscribed_shot) }
+      it { expect(described_class.subscribed).to_not include(unsubscribed_shot) }
+    end
   end
 
   describe '.postback' do

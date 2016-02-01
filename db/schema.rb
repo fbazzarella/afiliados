@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201002441) do
+ActiveRecord::Schema.define(version: 20160201144304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,9 @@ ActiveRecord::Schema.define(version: 20160201002441) do
     t.datetime "updated_at"
     t.datetime "relayed_at"
     t.integer  "list_item_id"
+    t.datetime "opened_at"
+    t.datetime "clicked_at"
+    t.datetime "unsubscribed_at"
   end
 
   add_index "shots", ["campaign_id"], name: "index_shots_on_campaign_id", using: :btree

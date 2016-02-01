@@ -16,6 +16,15 @@ class Shot < ActiveRecord::Base
   scope :relayed,   -> { where.not(relayed_at: nil) }
   scope :unrelayed, -> { where(relayed_at: nil) }
 
+  scope :opened,   -> { where.not(opened_at: nil) }
+  scope :unopened, -> { where(opened_at: nil) }
+
+  scope :clicked,   -> { where.not(clicked_at: nil) }
+  scope :unclicked, -> { where(clicked_at: nil) }
+
+  scope :unsubscribed, -> { where.not(unsubscribed_at: nil) }
+  scope :subscribed,   -> { where(unsubscribed_at: nil) }
+
   # scope :delivered,   -> { joins(:shot_events).where(shot_events: {event: 'delivered'}).distinct }
   # scope :undelivered, -> { joins(:shot_events).where.not(shot_events: {event: 'delivered'}).distinct } # Não funciona! Mais jobs falharam em produção. Comparar tudo! # Parece que o distinct resolve o problema :D
 

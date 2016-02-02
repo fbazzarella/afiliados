@@ -23,8 +23,12 @@ class List < ActiveRecord::Base
   end
 
   def to_csv
-    CSV.generate do |csv|
+    CSV.generate(row_sep: "\r\n") do |csv|
       list_items.valid.each do |list_item|
+        csv << [list_item.email.address]
+      end
+
+      list_items.unknown.each do |list_item|
         csv << [list_item.email.address]
       end
     end

@@ -15,12 +15,26 @@ RSpec.describe Email, type: :model do
   it { should_not allow_value('Other').for(:verification_result) }
 
   describe 'scopes' do
-    describe '.valid' do
-      let!(:valid_email) { create(:email, verification_result: 'Ok') }
-      let!(:not_valid_email) { create(:email) }
+    let!(:valid)   { create(:email, verification_result: 'Ok') }
+    let!(:invalid) { create(:email, verification_result: 'Bad') }
+    let!(:unknown) { create(:email) }
 
-      it { expect(described_class.valid).to include(valid_email) }
-      it { expect(described_class.valid).to_not include(not_valid_email) }
+    describe '.valid' do
+      it { expect(described_class.valid).to include(valid) }
+      it { expect(described_class.valid).to_not include(invalid) }
+      it { expect(described_class.valid).to_not include(unknown) }
+    end
+
+    describe '.invalid' do
+      it { expect(described_class.invalid).to_not include(valid) }
+      it { expect(described_class.invalid).to include(invalid) }
+      it { expect(described_class.invalid).to_not include(unknown) }
+    end
+
+    describe '.unknown' do
+      it { expect(described_class.unknown).to_not include(valid) }
+      it { expect(described_class.unknown).to_not include(invalid) }
+      it { expect(described_class.unknown).to include(unknown) }
     end
   end
 end

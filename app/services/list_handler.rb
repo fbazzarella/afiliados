@@ -16,7 +16,7 @@ class ListHandler
           next
         end
 
-        persist line, is_valid?(line), data[:list_id], ar
+        persist line, data[:list_id], ar
 
         publish data, redis
       end
@@ -25,20 +25,29 @@ class ListHandler
       list.update_attribute :import_finished, true
     end
 
+    def validate(email_id)
+      Email.find(email_id).tap do |email|
+        email.verification_result ||= EmailVerifier.check(email.address) ? 'Ok' : 'Bad'
+        email.save
+      end
+    end
+
     private
 
-    def persist(email, verification_result, list_id, ar)
+    def persist(email, list_id, ar)
       ar.execute %Q(
-        INSERT INTO emails (address, verification_result, created_at, updated_at)
-        VALUES ('#{email}', '#{verification_result}', '#{Time.now}', '#{Time.now}')
+        INSERT INTO emails (address, created_at, updated_at)
+        VALUES ('#{email}', '#{Time.now}', '#{Time.now}')
       )
     rescue Exception; ensure
+      email_id = Email.select(:id).where(address: email).first.id
+
       ar.execute %Q(
         INSERT INTO list_items (list_id, email_id, created_at, updated_at)
-        VALUES ('#{list_id}', (
-          SELECT id FROM emails WHERE address = '#{email}'
-        ), '#{Time.now}', '#{Time.now}')
+        VALUES ('#{list_id}', '#{email_id}', '#{Time.now}', '#{Time.now}')
       )
+
+      ListValidationJob.perform_later(email_id)
     end
 
     def filter(file)
@@ -59,12 +68,6 @@ class ListHandler
 
     def import_finished?(data)
       data[:imported_lines] == data[:lines_count]
-    end
-
-    def is_valid?(email)
-      EmailVerifier.check(email) ? 'Ok' : 'Bad'
-    rescue Exception
-      'Bad'
     end
   end
 end

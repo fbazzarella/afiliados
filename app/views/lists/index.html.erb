@@ -14,7 +14,9 @@
         <tr>
           <th>Nome do Arquivo</th>
           <th>Emails Únicos</th>
-          <th>Emails Válidos</th>
+          <th>Válidos</th>
+          <th>Inválidos</th>
+          <th>Desconhecidos</th>
           <th colspan="2">Importação</th>
         </tr>
       </thead>
@@ -24,10 +26,12 @@
             <td><%= list.name %></td>
             <td class="emails-count-<%= list.id %>"><%= list.list_items.count %></td>
             <td class="valid-emails-count-<%= list.id %>"><%= list.list_items.valid.count %></td>
+            <td class="invalid-emails-count-<%= list.id %>"><%= list.list_items.invalid.count %></td>
+            <td class="unknown-emails-count-<%= list.id %>"><%= list.list_items.unknown.count %></td>
             <td><%= list.import_finished ? 'Concluída' : 'Em Andamento' %></td>
 
             <td class="right">
-              <%= link_to glyph(:download, {}), list_download_path(list, format: :txt), title: 'Baixar Lista Validada', class: 'btn btn-xs btn-primary' %>
+              <%= link_to glyph(:download, {}), list_download_path(list, format: :txt), title: 'Baixar Lista (exceto inválidos)', class: 'btn btn-xs btn-primary' %>
 
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>
             </td>

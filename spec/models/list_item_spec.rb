@@ -15,5 +15,13 @@ RSpec.describe ListItem, type: :model do
     describe '.valid' do
       pending
     end
+
+    describe '.invalid' do
+      pending
+    end
+
+    describe '.unknown' do
+      pending
+    end
   end
 end

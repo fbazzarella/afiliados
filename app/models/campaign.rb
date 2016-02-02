@@ -27,7 +27,13 @@ class Campaign < ActiveRecord::Base
 
   def increase_chase(list_ids)
     list_ids.each do |list_id|
-      List.find(list_id).list_items.valid.each do |list_item|
+      list = List.find(list_id)
+
+      list.list_items.valid.each do |list_item|
+        shots.create(list_item_id: list_item.id)
+      end
+
+      list.list_items.unknown.each do |list_item|
         shots.create(list_item_id: list_item.id)
       end
     end

@@ -18,11 +18,11 @@ RSpec.describe List, type: :model do
       end
 
       describe 'after_save' do
-        let!(:list) { build(:list) }
+        let!(:list) { create(:list) }
 
         after { list.save }
 
-        it { expect(ListImportJob).to receive(:perform_later).with(list).once }
+        it { expect(ListImportJob).to receive(:perform_later).with(list.id).once }
       end
     end
   end

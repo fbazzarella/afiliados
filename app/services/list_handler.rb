@@ -1,6 +1,8 @@
 class ListHandler
   class << self
-    def import(list)
+    def import(list_id)
+      list = List.find(list_id)
+
       return if not list.file.present?
 
       ar    = ActiveRecord::Base.connection

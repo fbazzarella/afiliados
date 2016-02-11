@@ -27,7 +27,7 @@
         <% @campaigns.each do |campaign| %>
           <tr>
             <td><%= campaign.name %></td>
-            <td><%= campaign.shots.count == campaign.shots.queued.count ? 'Disparada' : campaign.status %></td>
+            <td><%= campaign.shots.count != 0 && campaign.shots.count == campaign.shots.queued.count ? 'Disparada' : campaign.status %></td>
             <td><%= campaign.shots.count %></td>
             <td><%= campaign.shots.queued.count %></td>
             <td><%= campaign.shots.relayed.count %></td>

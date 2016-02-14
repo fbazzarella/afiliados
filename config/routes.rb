@@ -33,4 +33,6 @@ NewApp::Application.routes.draw do
   end
 
   resources :links, only: [:show]
+
+  resources :relays, only: [:index, :create]
 end

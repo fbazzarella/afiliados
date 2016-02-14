@@ -1,10 +1,10 @@
 /.bundle
 /.env
+/.relays
 /.ruby-version
 /log/*.log
 /tmp
 
-/config/environments/production.rb
 /config/environments/staging.rb
 /config/database.yml
 /config/mypg.yml

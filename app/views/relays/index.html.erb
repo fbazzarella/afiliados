@@ -1,0 +1,15 @@
+<h1>Servidores</h1>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+    <%= form_for :relay, url: relays_path do |f| %>
+      <div class="form-group">
+        <label for="relay_relays">Lista de IPs</label>
+        <%= f.text_area :relays, value: @relays, class: 'form-control' %>
+        <small>Adicione apenas 1 IP por linha.</small>
+      </div>
+
+      <input type="submit" class="btn btn-sm btn-primary" value="Salvar Alterações">
+    <% end %>
+  </div>
+</div>

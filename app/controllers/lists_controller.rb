@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   def index
-    respond_with @lists = List.order(:name)
+    respond_with @lists = List.order(:name).page(params[:page]).per(5)
   end
 
   def create

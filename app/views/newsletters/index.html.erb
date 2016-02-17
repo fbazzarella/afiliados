@@ -8,6 +8,8 @@
     </button>
   </h1>
 
+  <%= paginate @newsletters %>
+
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -30,6 +32,8 @@
       </tbody>
     </table>
   </div>
+
+  <%= paginate @newsletters %>
 <% else %>
   <div class="jumbotron">
     <h1>Newsletters</h1>

@@ -8,6 +8,8 @@
     </button>
   </h1>
 
+  <%= paginate @campaigns %>
+
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -42,6 +44,8 @@
       </tbody>
     </table>
   </div>
+
+  <%= paginate @campaigns %>
 <% elsif List.where(import_finished: true).any? && Newsletter.any? %>
   <div class="jumbotron">
     <h1>Campanhas</h1>

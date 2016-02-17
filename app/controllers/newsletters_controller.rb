@@ -1,6 +1,6 @@
 class NewslettersController < ApplicationController
   def index
-    respond_with @newsletters = Newsletter.order(:subject)
+    respond_with @newsletters = Newsletter.order(:subject).page(params[:page]).per(5)
   end
 
   def create

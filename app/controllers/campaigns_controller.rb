@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   def index
-    respond_with @campaigns = Campaign.order(:name)
+    respond_with @campaigns = Campaign.order(:name).page(params[:page]).per(5)
   end
 
   def create

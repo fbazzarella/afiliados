@@ -8,8 +8,6 @@ class List < ActiveRecord::Base
 
   validates :name, presence: true
 
-  default_scope -> { includes(:list_items) }
-
   with_options on: :create do
     before_validation do
       self.name = file.file.original_filename if file.present?

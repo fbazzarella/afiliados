@@ -27,13 +27,6 @@ class ListHandler
       list.update_attribute :import_finished, true
     end
 
-    def validate(email_id)
-      Email.find(email_id).tap do |email|
-        email.verification_result ||= EmailVerifier.check(email.address) ? 'Ok' : 'Bad'
-        email.save
-      end
-    end
-
     private
 
     def persist(email, list_id, ar)
@@ -48,8 +41,6 @@ class ListHandler
         INSERT INTO list_items (list_id, email_id, created_at, updated_at)
         VALUES ('#{list_id}', '#{email_id}', '#{Time.now}', '#{Time.now}')
       )
-
-      ListValidationJob.perform_later(email_id)
     end
 
     def filter(file)

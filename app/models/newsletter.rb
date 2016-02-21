@@ -32,7 +32,7 @@ class Newsletter < ActiveRecord::Base
   end
 
   def parse_document(body)
-    Nokogiri::HTML.parse(body, nil, 'US-ASCII')
+    Nokogiri::HTML.parse(body, nil, 'UTF-8')
   end
 
   def parse_fragment(node)

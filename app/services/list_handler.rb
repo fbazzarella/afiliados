@@ -1,6 +1,8 @@
 class ListHandler
   class << self
     def import(list_id)
+      sleep 5
+
       list = List.find(list_id)
 
       return if not list.file.present?

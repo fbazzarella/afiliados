@@ -11,12 +11,6 @@ class Campaign < ActiveRecord::Base
     self
   end
 
-  # def recover_chase!
-  #   unless Sidekiq::Queue.new('default').any?
-  #     delay.recover_chase
-  #   end
-  # end
-
   def chase!
     delay.chase
 
@@ -36,16 +30,6 @@ class Campaign < ActiveRecord::Base
 
     update_attribute(:status, 'Pronta para Disparar')
   end
-
-  # def decrease_chase(nof)
-  #   while shots.unqueued.count > nof - shots.queued.count and shots.unqueued.count > 0
-  #     shots.unqueued.last.delete
-  #   end
-  # end
-
-  # def recover_chase
-  #   shots.queued.unrelayed.update_all(queued_at: nil)
-  # end
 
   def chase
     shots.unqueued.find_each(&:shoot!)

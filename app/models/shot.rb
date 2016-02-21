@@ -23,9 +23,6 @@ class Shot < ActiveRecord::Base
   scope :unsubscribed, -> { where.not(unsubscribed_at: nil) }
   scope :subscribed,   -> { where(unsubscribed_at: nil) }
 
-  # scope :delivered,   -> { joins(:shot_events).where(shot_events: {event: 'delivered'}).distinct }
-  # scope :undelivered, -> { joins(:shot_events).where.not(shot_events: {event: 'delivered'}).distinct } # Não funciona! Mais jobs falharam em produção. Comparar tudo! # Parece que o distinct resolve o problema :D
-
   class << self
     def postback(params)
       return false unless %w(sendgrid mailgun).include?(service = params.delete('service'))

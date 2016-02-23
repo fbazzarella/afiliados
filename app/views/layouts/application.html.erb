@@ -39,6 +39,7 @@
           <ul class="nav navbar-nav navbar-right">
             <% if current_user.present? %>
               <li><%= link_to 'Sidekiq\'s Dashboard', sidekiq_web_path %></li>
+              <li><%= link_to 'Reboot', reboot_relays_path, data: {method: :post, confirm: "Tem certeza de que deseja reiniciar o sistema? Levará aproximadamente 10 segundos para voltar."} %></li>
               <%= menu_link_to 'Sair', destroy_user_session_path, data: {method: :delete} %>
             <% else %>
               <li><%= link_to 'Entrar', new_user_session_path %></li>

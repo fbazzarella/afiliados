@@ -34,5 +34,7 @@ NewApp::Application.routes.draw do
 
   resources :links, only: [:show]
 
-  resources :relays, only: [:index, :create]
+  resources :relays, only: [:index, :create] do
+    post 'reboot', on: :collection
+  end
 end

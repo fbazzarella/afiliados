@@ -9,6 +9,11 @@ class RelaysController < ApplicationController
     write_or_create_and_redirect params[:relay][:relays]
   end
 
+  def reboot
+    system "echo '#{ENV['APP_PASSWORD']}' | sudo -S reboot"
+    redirect_to root_path
+  end
+
   private
 
   def write_or_create_and_redirect(relays = nil)

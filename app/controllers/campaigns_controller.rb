@@ -7,6 +7,10 @@ class CampaignsController < ApplicationController
     respond_with @campaign = Campaign.create(campaign_params).prepare_chase!(list_ids), location: campaigns_path
   end
 
+  def destroy
+    respond_with @campaign = Campaign.destroy(params[:id]), location: campaigns_path
+  end
+
   def chase
     Campaign.find(params[:campaign_id]).chase!
     redirect_to campaigns_path

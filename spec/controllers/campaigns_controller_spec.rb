@@ -28,6 +28,32 @@ RSpec.describe CampaignsController, type: :controller do
     pending
   end
 
+  describe 'DELETE destroy' do
+    context 'when logged in' do
+      login!
+
+      context 'when valid id' do
+        let!(:campaign)  { create(:campaign) }
+
+        before { delete :destroy, id: campaign.id }
+
+        it { expect(Campaign.count).to be_zero }
+
+        it { is_expected.to redirect_to(campaigns_path) }
+      end
+
+      context 'when invalid id' do
+        it { expect{ delete :destroy, id: 1 }.to raise_error(ActiveRecord::RecordNotFound) }
+      end
+    end
+
+    context 'when logged out' do
+      before { delete :destroy, id: 1 }
+
+      it { is_expected.to redirect_to(new_user_session_path) }
+    end
+  end
+
   describe 'GET chase' do
     pending
   end

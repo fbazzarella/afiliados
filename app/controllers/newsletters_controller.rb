@@ -8,7 +8,7 @@ class NewslettersController < ApplicationController
   end
 
   def destroy
-    respond_with @nresletter = Newsletter.destroy(params[:id]), location: newsletters_path
+    respond_with @newsletter = Newsletter.destroy(params[:id]), location: newsletters_path
   end
 
   private

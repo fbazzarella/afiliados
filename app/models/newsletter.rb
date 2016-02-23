@@ -1,5 +1,5 @@
 class Newsletter < ActiveRecord::Base
-  has_many :campaigns, dependent: :restrict_with_error
+  has_many :campaigns, dependent: :nullify
 
   def body_for(shot)
     html_body = parse_document(self.body)

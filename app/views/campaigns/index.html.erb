@@ -38,6 +38,8 @@
             <td><%= campaign.unsubscribed %></td>
             <td class="right">
               <%= link_to 'Disparar!', campaign_chase_path(campaign), class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
+
+              <%= link_to glyph(:trash, {}), campaign_path(campaign), title: 'Excluir Campanha', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta campanha?'}, class: 'btn btn-xs btn-danger' %>
             </td>
           </tr>
         <% end %>

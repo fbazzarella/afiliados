@@ -16,6 +16,14 @@
       destroy:
         notice: 'Lista excluída com sucesso.'
         alert: 'A Lista não pôde ser excluída.'
+    campaigns:
+      create:
+        notice: 'Campanha criada com sucesso.'
+      update:
+        notice: 'Campanha atualizada com sucesso.'
+      destroy:
+        notice: 'Campanha excluída com sucesso.'
+        alert: 'A Campanha não pôde ser excluída.'
     newsletters:
       create:
         notice: 'Newsletter criada com sucesso.'

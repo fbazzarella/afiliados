@@ -1,7 +1,7 @@
 class Campaign < ActiveRecord::Base
   belongs_to :newsletter
 
-  has_many :shots, dependent: :destroy
+  has_many :shots, dependent: :nullify
   has_many :list_items, through: :shots
 
   validates :name, presence: true

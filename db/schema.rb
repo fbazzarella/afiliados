@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201144304) do
+ActiveRecord::Schema.define(version: 20160223002101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20160201144304) do
     t.datetime "updated_at"
     t.integer  "newsletter_id"
     t.string   "status",        default: "Preparando"
+    t.integer  "reach",         default: 0
+    t.integer  "sent",          default: 0
+    t.integer  "delivered",     default: 0
+    t.integer  "opened",        default: 0
+    t.integer  "clicked",       default: 0
+    t.integer  "unsubscribed",  default: 0
   end
 
   add_index "campaigns", ["newsletter_id"], name: "index_campaigns_on_newsletter_id", using: :btree

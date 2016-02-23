@@ -4,6 +4,7 @@ class LinksController < ApplicationController
   def show
     @link = Link.find(params[:id]).tap do |link|
       link.shot.touch(:clicked_at)
+      link.shot.campaign.increment!(:clicked)
     end
 
     redirect_to @link.url

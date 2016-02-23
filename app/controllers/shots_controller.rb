@@ -7,12 +7,20 @@ class ShotsController < ApplicationController
   end
 
   def opened
-    Shot.find(params[:id]).touch(:opened_at)
+    Shot.find(params[:id]).tap do |shot|
+      shot.touch(:opened_at)
+      shot.campaign.increment!(:opened)
+    end
+
     send_data open("#{Rails.root}/app/assets/images/transparent.png", "rb").read
   end
 
   def unsubscribed
-    Shot.find(params[:id]).touch(:unsubscribed_at)
+    Shot.find(params[:id]).tap do |shot|
+      shot.touch(:unsubscribed_at)
+      shot.campaign.increment!(:unsubscribed)
+    end
+
     render text: 'Descadastrado com sucesso.'
   end
 end

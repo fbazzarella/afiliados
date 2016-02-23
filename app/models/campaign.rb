@@ -21,10 +21,9 @@ class Campaign < ActiveRecord::Base
 
   def increase_chase(list_ids)
     list_ids.each do |list_id|
-      list = List.find(list_id)
-
-      list.list_items.find_each do |list_item|
-        shots.create(list_item_id: list_item.id)
+      List.find(list_id).list_items.pluck(:id).each do |list_item_id|
+        shots.create(list_item_id: list_item_id)
+        increment!(:reach)
       end
     end
 
@@ -32,6 +31,8 @@ class Campaign < ActiveRecord::Base
   end
 
   def chase
-    shots.unqueued.find_each(&:shoot!)
+    shots.unqueued.pluck(:id).each do |shot_id|
+      Shot.find(shot_id).shoot!
+    end
   end
 end

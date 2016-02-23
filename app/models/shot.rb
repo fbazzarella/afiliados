@@ -45,7 +45,8 @@ class Shot < ActiveRecord::Base
   end
 
   def shoot!
-    CampaignMailer.delay.shot(self)
+    CampaignMailer.delay.shot(self.id)
     touch(:queued_at)
+    campaign.increment!(:sent)
   end
 end

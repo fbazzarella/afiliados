@@ -16,11 +16,6 @@ class ListsController < ApplicationController
     redirect_to lists_path
   end
 
-  def download
-    @list = List.find(params[:list_id])
-    send_data @list.to_csv, filename: "validada_#{@list.name}"
-  end
-
   private
 
   def list_params

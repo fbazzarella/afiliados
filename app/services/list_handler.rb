@@ -39,6 +39,12 @@ class ListHandler
       first_id = list.list_items.first.id
       last_id  = list.list_items.last.id
 
+      lists_path = "#{Rails.root}/public/lists/"
+
+      valid_list   = File.new(lists_path + "validos_#{list.id}_#{list.name}", "wb")
+      invalid_list = File.new(lists_path + "invalidos_#{list.id}_#{list.name}", "wb")
+      unknown_list = File.new(lists_path + "desconhecidos_#{list.id}_#{list.name}", "wb")
+
       for list_item_id in first_id..last_id do
         email = list.list_items.find(list_item_id).email
 
@@ -46,14 +52,21 @@ class ListHandler
           if EmailVerifier.check(email.address)
             email.update_attribute(:verification_result, 'Ok')
             list.increment!(:valids_count)
+            valid_list << "#{email.address}\r\n"
           else
             email.update_attribute(:verification_result, 'Bad')
             list.increment!(:invalids_count)
+            invalid_list << "#{email.address}\r\n"
           end
         rescue Exception
           list.increment!(:unknowns_count)
+          unknown_list << "#{email.address}\r\n"
         end
       end
+
+      valid_list.close
+      invalid_list.close
+      unknown_list.close
 
       list.update_attribute(:status, 'Validação Concluída')
     end

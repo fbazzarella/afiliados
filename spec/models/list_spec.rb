@@ -34,8 +34,4 @@ RSpec.describe List, type: :model do
 
     it { expect(subject[:id]).to be_eql(list.id) }
   end
-
-  describe '#to_csv' do
-    pending
-  end
 end

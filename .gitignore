@@ -10,3 +10,5 @@
 /config/mypg.yml
 /config/shuttle.yml
 /public/assets
+/public/lists/*.txt
+/public/lists/*.csv

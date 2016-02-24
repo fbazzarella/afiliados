@@ -15,26 +15,24 @@
       <thead>
         <tr>
           <th>Nome do Arquivo</th>
+          <th>Status</th>
           <th>Emails Únicos</th>
           <th>Válidos</th>
           <th>Inválidos</th>
-          <th>Desconhecidos</th>
-          <th colspan="2">Importação</th>
+          <th colspan="2">Desconhecidos</th>
         </tr>
       </thead>
       <tbody>
         <% @lists.each do |list| %>
           <tr>
             <td><%= list.name %></td>
-            <td class="emails-count-<%= list.id %>"><%= list.list_items.count %></td>
-            <td class="valid-emails-count-<%= list.id %>"><%= list.list_items.valid.count %></td>
-            <td class="invalid-emails-count-<%= list.id %>"><%= list.list_items.invalid.count %></td>
-            <td class="unknown-emails-count-<%= list.id %>"><%= list.list_items.unknown.count %></td>
-            <td><%= list.import_finished ? 'Concluída' : 'Em Andamento' %></td>
-
+            <td><%= list.status %></td>
+            <td class="emails-count-<%= list.id %>"><%= list.emails_count %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.valids_count.to_s, list_download_path(list, format: :txt), title: 'Baixar Lista (emails válidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.invalids_count.to_s, list_download_path(list, format: :txt), title: 'Baixar Lista (emails inválidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.unknowns_count.to_s, list_download_path(list, format: :txt), title: 'Baixar Lista (emails desconhecidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
             <td class="right">
-              <%= link_to glyph(:download, {}), list_download_path(list, format: :txt), title: 'Baixar Lista (exceto inválidos)', class: 'btn btn-xs btn-primary' %>
-
+              <%= link_to 'Validar!', list_download_path(list, format: :txt), title: 'Validar Lista', class: "btn btn-xs btn-success #{'disabled' if not list.status == 'Importação Concluída'}" %>
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>
             </td>
           </tr>

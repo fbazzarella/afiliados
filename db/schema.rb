@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223002101) do
+ActiveRecord::Schema.define(version: 20160224042142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,11 +62,15 @@ ActiveRecord::Schema.define(version: 20160223002101) do
   add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "file"
     t.string   "name"
-    t.boolean  "import_finished", default: false
+    t.integer  "emails_count",   default: 0
+    t.string   "status",         default: "Importando"
+    t.integer  "valids_count",   default: 0
+    t.integer  "invalids_count", default: 0
+    t.integer  "unknowns_count", default: 0
   end
 
   create_table "newsletters", force: :cascade do |t|

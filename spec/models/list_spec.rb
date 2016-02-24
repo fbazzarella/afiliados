@@ -16,14 +16,14 @@ RSpec.describe List, type: :model do
 
         it { expect(list.name).to be_eql('list.txt') }
       end
+    end
 
-      describe 'after_save' do
-        let!(:list) { create(:list) }
+    describe 'after_create' do
+      let!(:list) { build(:list) }
 
-        after { list.save }
+      after { list.save }
 
-        it { expect(ListImportJob).to receive(:perform_later).with(list.id).once }
-      end
+      it { expect(ListImportJob).to receive(:perform_later).once }
     end
   end
 

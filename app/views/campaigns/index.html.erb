@@ -37,7 +37,7 @@
             <td><%= campaign.clicked %></td>
             <td><%= campaign.unsubscribed %></td>
             <td class="right">
-              <%= link_to 'Disparar!', campaign_chase_path(campaign), class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
+              <%= link_to 'Disparar!', campaign_chase_path(campaign), title: 'Disparar Campanha', class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
 
               <%= link_to glyph(:trash, {}), campaign_path(campaign), title: 'Excluir Campanha', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta campanha?'}, class: 'btn btn-xs btn-danger' %>
             </td>
@@ -48,7 +48,7 @@
   </div>
 
   <%= paginate @campaigns %>
-<% elsif List.where(import_finished: true).any? && Newsletter.any? %>
+<% elsif List.where(status: 'Importação Concluída').any? && Newsletter.any? %>
   <div class="jumbotron">
     <h1>Campanhas</h1>
 

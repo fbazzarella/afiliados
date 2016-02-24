@@ -23,7 +23,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label for="campaign_list_id">Lista</label>
-                <%= f.collection_select(:list_id, List.where(import_finished: true).order(:name), :id, :name, {}, {class: 'form-control', multiple: true}) %>
+                <%= f.collection_select(:list_id, List.where(status: 'Importação Concluída').order(:name), :id, :name, {}, {class: 'form-control', multiple: true}) %>
               </div>
             </div>
           </div>

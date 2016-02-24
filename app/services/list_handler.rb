@@ -22,11 +22,13 @@ class ListHandler
 
         persist line, data[:list_id], ar
 
+        list.increment! :emails_count
+
         publish data, redis
       end
 
       list.remove_file!
-      list.update_attribute :import_finished, true
+      list.update_attribute :status, 'Importação Concluída'
     end
 
     private

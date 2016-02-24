@@ -11,6 +11,11 @@ class ListsController < ApplicationController
     respond_with @list = List.destroy(params[:id]), location: lists_path
   end
 
+  def validate
+    ListValidateJob.perform_later(params[:list_id])
+    redirect_to lists_path
+  end
+
   def download
     @list = List.find(params[:list_id])
     send_data @list.to_csv, filename: "validada_#{@list.name}"

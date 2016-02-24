@@ -7,7 +7,11 @@ RSpec.describe RelaysController, type: :controller do
     pending
   end
 
-  describe 'PUT update' do
+  describe 'POST create' do
+    pending
+  end
+
+  describe 'POST reboot' do
     pending
   end
 end

@@ -14,7 +14,8 @@ NewApp::Application.routes.draw do
   end
 
   resources :lists, only: [:index, :create, :destroy] do
-    get 'download', as: :download
+    post 'validate', as: :validate
+    get  'download', as: :download
   end
 
   resources :newsletters, only: [:index, :create, :destroy]

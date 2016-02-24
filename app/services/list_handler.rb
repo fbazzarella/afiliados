@@ -31,6 +31,33 @@ class ListHandler
       list.update_attribute :status, 'Importação Concluída'
     end
 
+    def validate(list_id)
+      list = List.find(list_id)
+
+      list.update_attribute(:status, 'Validando')
+
+      first_id = list.list_items.first.id
+      last_id  = list.list_items.last.id
+
+      for list_item_id in first_id..last_id do
+        email = list.list_items.find(list_item_id).email
+
+        begin
+          if EmailVerifier.check(email.address)
+            email.update_attribute(:verification_result, 'Ok')
+            list.increment!(:valids_count)
+          else
+            email.update_attribute(:verification_result, 'Bad')
+            list.increment!(:invalids_count)
+          end
+        rescue Exception
+          list.increment!(:unknowns_count)
+        end
+      end
+
+      list.update_attribute(:status, 'Validação Concluída')
+    end
+
     private
 
     def persist(email, list_id, ar)

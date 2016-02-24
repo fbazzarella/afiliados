@@ -5,6 +5,10 @@ RSpec.describe ListHandler do
     pending
   end
 
+  describe '.validate' do
+    pending
+  end
+
   describe 'private methods' do
     describe '.persist' do
       pending

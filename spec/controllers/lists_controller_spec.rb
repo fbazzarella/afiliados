@@ -72,6 +72,18 @@ RSpec.describe ListsController, type: :controller do
     end
   end
 
+  describe 'POST validate' do
+    context 'when logged in' do
+      pending
+    end
+
+    context 'when logged out' do
+      before { get :validate, list_id: 1 }
+
+      it { is_expected.to redirect_to(new_user_session_path) }
+    end
+  end
+
   describe 'GET download' do
     context 'when logged in' do
       pending

@@ -8,6 +8,10 @@ RSpec.describe List, type: :model do
   it { should validate_presence_of(:file) }
 
   describe 'callbacks' do
+    describe 'after_find' do
+      pending
+    end
+
     describe 'on create' do
       describe 'before_validation' do
         let!(:fixture) { File.open(File.join(Rails.root, '/spec/fixtures/list.txt')) }

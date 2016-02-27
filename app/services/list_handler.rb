@@ -34,8 +34,6 @@ class ListHandler
     def validate(list_id)
       list = List.find(list_id)
 
-      list.update_attribute(:status, 'Validando')
-
       list_name = "#{list.id}_#{list.name}"
       first_id  = list.list_items.first.id
       last_id   = list.list_items.last.id

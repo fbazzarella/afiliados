@@ -32,12 +32,12 @@
             <td><%= campaign.reach > 0 && campaign.reach == campaign.sent ? 'Disparada' : campaign.status %></td>
             <td><%= campaign.reach %></td>
             <td><%= campaign.sent %></td>
-            <td><%= campaign.delivered %></td>
+            <td><%= campaign.shots.relayed.count %></td>
             <td><%= campaign.opened %></td>
             <td><%= campaign.clicked %></td>
             <td><%= campaign.unsubscribed %></td>
             <td class="right">
-              <%= link_to 'Disparar!', campaign_chase_path(campaign), title: 'Disparar Campanha', class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
+              <%= link_to 'Disparar!', campaign_chase_path(campaign), title: 'Disparar Campanha', data: {method: :post, confirm: 'Tem certeza de que deseja disparar esta campanha?'}, class: "btn btn-xs btn-success #{'disabled' if not campaign.status == 'Pronta para Disparar'}" %>
 
               <%= link_to glyph(:trash, {}), campaign_path(campaign), title: 'Excluir Campanha', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta campanha?'}, class: 'btn btn-xs btn-danger' %>
             </td>

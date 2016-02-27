@@ -4,10 +4,7 @@ class CampaignMailer < ActionMailer::Base
   default from: ENV['SMTP_FROM']
 
   def self.delivered_email(mail)
-    Shot.find(mail.header['X-Shot-Id'].to_s.to_i).tap do |shot|
-      shot.touch(:relayed_at)
-      shot.campaign.increment!(:delivered)
-    end
+    Shot.find(mail.header['X-Shot-Id'].to_s.to_i).touch(:relayed_at)
   end
 
   def shot(shot_id)

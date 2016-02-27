@@ -13,6 +13,7 @@ class ListsController < ApplicationController
 
   def validate
     ListValidateJob.perform_later(params[:list_id])
+    List.find(params[:list_id]).update_attribute(:status, 'Validando')
     redirect_to lists_path
   end
 

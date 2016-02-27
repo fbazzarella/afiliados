@@ -10,7 +10,7 @@ NewApp::Application.routes.draw do
   end
 
   resources :campaigns, only: [:index, :create, :destroy] do
-    get 'chase', as: :chase
+    post 'chase', as: :chase
   end
 
   resources :lists, only: [:index, :create, :destroy] do

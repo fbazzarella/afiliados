@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224042142) do
+ActiveRecord::Schema.define(version: 20160227184438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20160224042142) do
     t.string   "status",        default: "Preparando"
     t.integer  "reach",         default: 0
     t.integer  "sent",          default: 0
-    t.integer  "delivered",     default: 0
     t.integer  "opened",        default: 0
     t.integer  "clicked",       default: 0
     t.integer  "unsubscribed",  default: 0

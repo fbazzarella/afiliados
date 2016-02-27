@@ -28,9 +28,9 @@
             <td><%= list.name %></td>
             <td><%= list.status %></td>
             <td class="emails-count-<%= list.id %>"><%= list.emails_count %></td>
-            <td><%= link_to glyph(:download, {}) + ' ' + list.valids_count.to_s, "/lists/validos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails válidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
-            <td><%= link_to glyph(:download, {}) + ' ' + list.invalids_count.to_s, "/lists/invalidos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails inválidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
-            <td><%= link_to glyph(:download, {}) + ' ' + list.unknowns_count.to_s, "/lists/desconhecidos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails desconhecidos)', class: "btn btn-xs btn-primary #{'disabled' if not list.status == 'Validação Concluída'}" %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.valids_count.to_s, "/lists/validos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails válidos)', class: "btn btn-xs btn-primary" %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.invalids_count.to_s, "/lists/invalidos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails inválidos)', class: "btn btn-xs btn-primary" %></td>
+            <td><%= link_to glyph(:download, {}) + ' ' + list.unknowns_count.to_s, "/lists/desconhecidos_#{list.id}_#{list.name}", title: 'Baixar Lista (emails desconhecidos)', class: "btn btn-xs btn-primary" %></td>
             <td class="right">
               <%= link_to 'Validar!', list_validate_path(list), title: 'Validar Lista', data: {method: :post, confirm: 'Tem certeza de que deseja validar esta lista?'}, class: "btn btn-xs btn-success #{'disabled' if not list.status == 'Importação Concluída'}" %>
               <%= link_to glyph(:trash, {}), list_path(list), title: 'Excluir Lista', data: {method: :delete, confirm: 'Tem certeza de que deseja excluir esta lista?'}, class: 'btn btn-xs btn-danger' %>

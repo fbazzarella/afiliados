@@ -48,7 +48,7 @@
   </div>
 
   <%= paginate @campaigns %>
-<% elsif List.where(status: 'Importação Concluída').any? && Newsletter.any? %>
+<% elsif List.where.not(status: 'Importando').any? && Newsletter.any? %>
   <div class="jumbotron">
     <h1>Campanhas</h1>
 
